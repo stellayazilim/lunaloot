@@ -1,6 +1,34 @@
 @LunaLoot.Master.Api_HostAddress = http://localhost:5200
 
-GET {{LunaLoot.Master.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+// successful Login
+POST {{LunaLoot.Master.Api_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jdoe@example.com",
+  "password": "12345"
+}
 
 ###
+// Failed login
+POST https://localhost:7123/auth/login
+Content-Type: application/json
+
+{
+  "email": "jdoe1@example.com",
+  "password": "12345"
+}
+
+
+
+###  register
+POST https://localhost:7123/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "john",
+  "lastName": "deo",
+  "email": "jdoe@example.com",
+  "password": "12345"
+}
+

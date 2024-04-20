@@ -16,15 +16,15 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Update="appsettings.Development.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\LunaLoot.Master.Application\LunaLoot.Master.Application.csproj" />
       <ProjectReference Include="..\LunaLoot.Master.Contracts\LunaLoot.Master.Contracts.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controller\" />
+      <ProjectReference Include="..\LunaLoot.Master.Infrastructure\LunaLoot.Master.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
