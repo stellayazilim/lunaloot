@@ -1,10 +1,7 @@
-﻿using LunaLoot.Master.Application.Auth.Queries.Login;
-using LunaLoot.Master.Application.Common.Interfaces;
-using LunaLoot.Master.Application.Common.Persistence;
+﻿using LunaLoot.Master.Application.Common.Interfaces;
 using LunaLoot.Master.Domain.Common.Errors.Auth;
 using ErrorOr;
-using FluentValidation;
-using LunaLoot.Master.Application.Common.Persistence.Repositories;
+using LunaLoot.Master.Application.Common.Persistence;
 using MediatR;
 
 
@@ -12,9 +9,7 @@ namespace LunaLoot.Master.Application.Auth.Queries.LoginWithCredentials;
 
 public class LoginWithPasswordQueryHandler
 (
-    
-  
-    IAuthRepository authRepository, ITokenGenerator tokenGenerator): IRequestHandler<
+    IUnitOfWork unitOfWork, ITokenGenerator tokenGenerator): IRequestHandler<
     LoginWithCredentialsQuery, 
     ErrorOr<LoginWithPasswordQueryResult>>
 {
@@ -25,7 +20,7 @@ public class LoginWithPasswordQueryHandler
     {
 
         
-        var user = await authRepository.GetUserByEmailAsync(withPasswordQuery.Email);
+        var user = await unitOfWork.UserRepository.GetByEmailAsync(withPasswordQuery.Email);
        
         //  validate if user exists
         if (user is null)

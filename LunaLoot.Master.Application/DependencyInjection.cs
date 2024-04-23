@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using LunaLoot.Master.Application.Common.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +15,7 @@ public static class DependencyInjection
         {
             x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             x.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            x.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
         });
 
         return services;

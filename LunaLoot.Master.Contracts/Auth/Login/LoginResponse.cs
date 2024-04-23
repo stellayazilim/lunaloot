@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using LunaLoot.Master.Application.Auth.Queries.Login;
+using LunaLoot.Master.Application.Auth.Queries.LoginWithCredentials;
 
 namespace LunaLoot.Master.Contracts.Auth.Login;
 

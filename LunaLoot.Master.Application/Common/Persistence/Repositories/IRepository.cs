@@ -2,10 +2,43 @@
 
 public interface IRepository<TEntity, in TId> where TEntity: class where TId: notnull
 {
+    /// <summary>
+    /// Get Entity type of TEntity
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>TEntity</returns>
+    TEntity? GetById(TId id);
+    
+    /// <summary>
+    /// asynchronous version of GetById
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns> Task<TEntity> </returns>
     Task<TEntity?> GetByIdAsync(TId id);
+    
+    /// <summary>
+    /// Get All entities
+    /// </summary>
+    /// <returns></returns>
     Task<IEnumerable<TEntity>> GetAllAsync();
+    
+    /// <summary>
+    /// Get all entities asynchronously
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<TEntity> GetAll();
+
+    void Add(TEntity entity);
+    
+    /// <summary>
+    /// Adds an entity within transaction
+    /// asynchronously
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     Task AddAsync(TEntity entity);
-    Task AddRangeAsync(IEnumerable<TEntity?> entities);
-    Task RemoveAsync(TId id);
-    Task RemoveRangeAsync(IEnumerable<TEntity> entities);
+    Task AddRangeAsync(IEnumerable<TEntity> entities);
+
+    void Remove(TId id);
+    void RemoveRange(IEnumerable<TEntity> entities);
 }

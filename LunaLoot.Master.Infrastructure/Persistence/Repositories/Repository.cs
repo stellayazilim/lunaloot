@@ -1,20 +1,23 @@
 ﻿using LunaLoot.Master.Application.Common.Persistence.Repositories;
-using LunaLoot.Master.Domain.Auth;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.Repositories;
 
-internal class Repository<TEntity, TId>(DbContext dbContext): IRepository<TEntity, TId> 
+public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository<TEntity, TId> 
     where TEntity: class 
     where TId : notnull
 {
 
-    private readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
+    protected readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
     
     public async Task<TEntity?> GetByIdAsync(TId id)
     {
         return await _dbSet.FindAsync(id);
+    }
+
+    public TEntity? GetById(TId id)
+    {
+        return _dbSet.Find(id);
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -22,6 +25,16 @@ internal class Repository<TEntity, TId>(DbContext dbContext): IRepository<TEntit
         return await _dbSet.ToListAsync();
     }
 
+    public IEnumerable<TEntity> GetAll()
+    {
+        return _dbSet.ToList();
+    }
+
+    public void Add(TEntity entity)
+    {
+        _dbSet.Add(entity);
+    }
+    
     public async Task AddAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);
@@ -32,13 +45,18 @@ internal class Repository<TEntity, TId>(DbContext dbContext): IRepository<TEntit
         await _dbSet.AddRangeAsync(entities);
     }
 
-    public Task RemoveAsync(TId id)
+    public void Remove(TId id)
     {
         throw new NotImplementedException();
     }
-
-    public Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+    public async Task RemoveAsync(TId id)
     {
-        throw new NotImplementedException();
+        _dbSet.Remove(
+            await GetByIdAsync(id) ?? throw new InvalidOperationException());
+    }
+
+    public void RemoveRange(IEnumerable<TEntity> entities)
+    {
+        _dbSet.RemoveRange(entities);
     }
 }

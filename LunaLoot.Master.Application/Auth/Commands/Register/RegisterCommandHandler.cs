@@ -8,11 +8,10 @@ using MediatR;
 namespace LunaLoot.Master.Application.Auth.Commands.Register;
 
 public class RegisterCommandHandler(
-    IAuthRepository authRepository): 
+    IUnitOfWork unitOfWork): 
     IRequestHandler<RegisterCommand, ErrorOr<RegisterCommandResult>>
 
 {
-    private readonly IAuthRepository _authRepository = authRepository;
 
 
     public async Task<ErrorOr<RegisterCommandResult>> Handle(
@@ -20,21 +19,24 @@ public class RegisterCommandHandler(
         CancellationToken cancellationToken)
     {
 
-        if (await _authRepository.GetUserByEmailAsync(email: command.Email) is not null)
+        if (await unitOfWork.UserRepository.GetByEmailAsync(command.Email) is not null)
             return Errors.Auth.DuplicateEmailError(command.Email);
         
         // if not exists then generate user with unique id
-
-        var user = new ApplicationUser()
-        {
-            Id = Guid.NewGuid(),
-            FirstName = command.FirstName,
-            LastName = command.LastName,
-            Email = command.Email,
-            Password = command.Password
-        };
-
-        await authRepository.CreateAsync(user);
+        
+        var user = ApplicationUser.CreateNew(
+            command.FirstName,
+            command.LastName,
+            command.Email,
+            command.PhoneNumber,
+            command.Password,
+            null,
+            new(),
+            new());
+        
+        
+        await unitOfWork.UserRepository.AddAsync(user);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         
         return new RegisterCommandResult();
     }

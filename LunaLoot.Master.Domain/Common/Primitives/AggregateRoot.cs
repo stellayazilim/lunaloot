@@ -5,4 +5,6 @@ public abstract class AggregateRoot<TId> :
     protected AggregateRoot(TId id) : base(id) {
         Id = id;
     }
+
+    protected AggregateRoot() { }
 }

@@ -1,6 +1,11 @@
 ﻿namespace LunaLoot.Master.Domain.Common.Primitives;
 
 public abstract class ValueObject: IEquatable<ValueObject> {
+
+    protected ValueObject()
+    {  
+    }
+    
     public abstract IEnumerable<object> GetEqualityComponents();
 
     public override bool Equals(object? obj)

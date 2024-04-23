@@ -3,11 +3,21 @@
 
 public abstract class Entity<TId>: IEquatable<Entity<TId>>
 {
-    public TId Id { get; protected set;}
+    public TId Id { get; protected init;}
 
+    public DateTime CreatedAt { get; protected init; }
+    
+    public DateTime UpdatedAt { get; protected init; }
+    
+    public DateTime DeletedAt { get; protected init; }
+    
+    public string DeleteReason { get; protected init; }
+    
     protected Entity(TId id) {
         Id = id;
     }
+
+    protected Entity() {  }
 
     public override bool Equals(object? obj)
     {

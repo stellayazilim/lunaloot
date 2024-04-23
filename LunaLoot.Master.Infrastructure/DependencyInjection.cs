@@ -1,11 +1,14 @@
 ﻿using System.Text;
 using LunaLoot.Master.Application.Common.Interfaces;
+using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Application.Common.Persistence.Repositories;
 using LunaLoot.Master.Application.Common.Services;
 using LunaLoot.Master.Infrastructure.Auth;
 using LunaLoot.Master.Infrastructure.Persistence;
+using LunaLoot.Master.Infrastructure.Persistence.EFCore;
 using LunaLoot.Master.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -20,17 +23,18 @@ public static class DependencyInjection
     {
         
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddAuth(config);
+        services.AddPersistence();
         return services;
     }
 
 
-    private static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration config)
+    private static void AddAuth(this IServiceCollection services, IConfiguration config)
     {
         var settings = new JwtSettings();
         config.Bind(JwtSettings.SectionName, settings);
         services.AddSingleton(Options.Create(settings));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddSingleton<ITokenGenerator, JwtTokenGenerator>();
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
@@ -44,6 +48,12 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(settings.Secret))
             });
-        return services;
+    }
+
+    private static void AddPersistence(this IServiceCollection services)
+    {
+        services.AddDbContext<LunaLootMasterDbContext>( options =>
+            options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=LunaLootMaster;User Id=postgres;Password=postgres;")
+            );
     }
 }
