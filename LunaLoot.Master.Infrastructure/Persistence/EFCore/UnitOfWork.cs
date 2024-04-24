@@ -1,9 +1,8 @@
 ﻿using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Application.Common.Persistence.Repositories;
-using LunaLoot.Master.Infrastructure.Persistence.EFCore;
-using LunaLoot.Master.Infrastructure.Persistence.Repositories;
+using LunaLoot.Master.Infrastructure.Persistence.EFCore.Repositories;
 
-namespace LunaLoot.Master.Infrastructure.Persistence;
+namespace LunaLoot.Master.Infrastructure.Persistence.EFCore;
 
 public class UnitOfWork(LunaLootMasterDbContext dbContext): IUnitOfWork
 {

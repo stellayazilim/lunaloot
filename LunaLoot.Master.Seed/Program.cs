@@ -4,6 +4,8 @@ using LunaLoot.Master.Domain.Auth.Entities;
 using LunaLoot.Master.Domain.Auth.ValueObjects;
 using LunaLoot.Master.Infrastructure.Auth;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore;
+using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace LunaLoot.Master.Seed;
@@ -16,7 +18,9 @@ public static class Program
         var opb = new DbContextOptionsBuilder<LunaLootMasterDbContext>();
 
         opb.UseNpgsql("Server=127.0.0.1;Port=5432;Database=LunaLootMaster;User Id=postgres;Password=postgres;");
-        var dbcontext = new LunaLootMasterDbContext(opb.Options);
+        var dbContext = new LunaLootMasterDbContext(
+            new PublishDomainEventInterceptor(new Mediator(null)),
+            opb.Options);
 
 
 
@@ -54,14 +58,14 @@ public static class Program
                 },
                 new()
                 {
-                    dbcontext.ApplicationRoles.Find(ApplicationRoleId.Parse(Guid.Parse("2ee48831-739b-48ab-943c-47b94719d59f"))) ?? administratorRole
+                    dbContext.ApplicationRoles.Find(ApplicationRoleId.Parse(Guid.Parse("2ee48831-739b-48ab-943c-47b94719d59f"))) ?? administratorRole
                 }
             );
 
 
         
-        dbcontext.Addresses.Add(administratorAddress);
-        dbcontext.ApplicationUsers.Add(administratorUser);
-        dbcontext.SaveChanges();
+        dbContext.Addresses.Add(administratorAddress);
+        dbContext.ApplicationUsers.Add(administratorUser);
+        dbContext.SaveChanges();
     }
 }

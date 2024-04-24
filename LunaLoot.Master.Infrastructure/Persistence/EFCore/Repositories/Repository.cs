@@ -1,7 +1,7 @@
 ﻿using LunaLoot.Master.Application.Common.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace LunaLoot.Master.Infrastructure.Persistence.Repositories;
+namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Repositories;
 
 public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository<TEntity, TId> 
     where TEntity: class 

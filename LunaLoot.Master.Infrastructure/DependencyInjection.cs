@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using LunaLoot.Master.Application.Common.Interfaces;
 using LunaLoot.Master.Application.Common.Persistence;
-using LunaLoot.Master.Application.Common.Persistence.Repositories;
 using LunaLoot.Master.Application.Common.Services;
 using LunaLoot.Master.Infrastructure.Auth;
 using LunaLoot.Master.Infrastructure.Persistence;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore;
+using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
 using LunaLoot.Master.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -58,5 +58,7 @@ public static class DependencyInjection
                 options.UseNpgsql(
                     "Server=127.0.0.1;Port=5432;Database=LunaLootMaster;User Id=postgres;Password=postgres;");
             });
+
+        services.AddScoped<PublishDomainEventInterceptor>();
     }
 }
