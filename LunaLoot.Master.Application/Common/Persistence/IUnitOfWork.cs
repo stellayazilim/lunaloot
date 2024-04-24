@@ -5,8 +5,8 @@ namespace LunaLoot.Master.Application.Common.Persistence;
 public interface IUnitOfWork: IDisposable
 {
     IUserRepository UserRepository { get; init; }
-
     IRoleRepository RoleRepository { get; init; }
+    IAddressRepository AddressRepository { get; init; }
     int SaveChanges();
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

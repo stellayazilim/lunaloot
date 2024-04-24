@@ -36,21 +36,6 @@ public record RegisterRequest()
     [JsonPropertyName("password")] 
     public string Password { get; init; } = null!;  
 
-    
-    
-    
-    // public static implicit operator RegisterRequest(RegisterCommand command)
-    // {
-    //     return new RegisterRequest()
-    //     {
-    //       FirstName = command.FirstName,
-    //       LastName = command.LastName,
-    //       PhoneNumber = command.PhoneNumber,
-    //       Email = command.Email,
-    //       Address = command.Address,
-    //       Password = command.Password
-    //     };
-    // }
 
     public static implicit operator RegisterCommand(RegisterRequest request)
     {
@@ -70,30 +55,30 @@ public record RegisterRequest()
 
 public record AddressDto
 {
- 
-    [JsonPropertyName("country")]
-    public CountryDto Country { get; set; }
+
+    [JsonPropertyName("country")] 
+    public string Country { get; set; } = string.Empty;
     
     [JsonPropertyName("city")]
-    public string City { get; set; }
+    public string City { get; set; } = string.Empty;
     
     [JsonPropertyName("province")]
-    public string Province { get; set; }
+    public string Province { get; set; } = string.Empty;
     
     [JsonPropertyName("town")]
-    public string Town { get; set; }
+    public string Town { get; set; } = string.Empty;
     
     [JsonPropertyName("street")]
-    public string Street { get; set; }
+    public string Street { get; set; } = string.Empty;
     
     [JsonPropertyName("postCode")]
-    public string PostCode { get; set; }
+    public string PostCode { get; set; } = string.Empty;
     
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
     public static implicit operator AddressDto(RegisterCommandAddress address)
     {
         return new AddressDto()
@@ -125,34 +110,3 @@ public record AddressDto
 }
 
 
-public record CountryDto
-{ 
-    [JsonPropertyName("asciiCode")]
-    public string? AsciiCode { get; set; }
-    
-    [JsonPropertyName("isoCode")]
-    public string? IsoCode { get; set; }
-    
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = string.Empty;
-    
-    public static implicit operator CountryDto(RegisterCommandCountry country)
-    {
-        return new CountryDto()
-        {
-            AsciiCode = country?.AsciiCode,
-            IsoCode = country?.IsoCode,
-            #pragma warning disable CS8602 
-            Name = country.Name,
-        };
-    }
-
-    public static implicit operator RegisterCommandCountry(CountryDto dto)
-    {
-        return new RegisterCommandCountry(
-            IsoCode: dto?.IsoCode,
-            AsciiCode: dto?.AsciiCode,
-            Name: dto.Name);
-    }
-    
-}

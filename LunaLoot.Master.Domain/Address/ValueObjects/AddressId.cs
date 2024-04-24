@@ -2,12 +2,24 @@
 
 namespace LunaLoot.Master.Domain.Address.ValueObjects;
 
-public class AddressId: ValueObject
+public class AddressId: AggregateRootId<Guid>
 {
-    public Guid Value { get; private init; }
+    public override Guid Value { get; protected set; }
     
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
     }
+
+    private AddressId(Guid value)
+    {
+        Value = value;
+    }
+    
+    private AddressId() {}
+
+    public static AddressId CreateNew()
+        => new(Guid.NewGuid());
+
+    public static AddressId Parse(Guid id) => new(id);
 }

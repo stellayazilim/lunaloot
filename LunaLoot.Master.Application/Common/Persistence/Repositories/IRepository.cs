@@ -8,19 +8,20 @@ public interface IRepository<TEntity, in TId> where TEntity: class where TId: no
     /// <param name="id"></param>
     /// <returns>TEntity</returns>
     TEntity? GetById(TId id);
-    
+
     /// <summary>
     /// asynchronous version of GetById
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns> Task<TEntity> </returns>
-    Task<TEntity?> GetByIdAsync(TId id);
+    Task<TEntity?> GetByIdAsync(TId id,CancellationToken? cancellationToken  = null);
     
     /// <summary>
     /// Get All entities
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken? cancellationToken  = null);
     
     /// <summary>
     /// Get all entities asynchronously
@@ -35,9 +36,10 @@ public interface IRepository<TEntity, in TId> where TEntity: class where TId: no
     /// asynchronously
     /// </summary>
     /// <param name="entity"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task AddAsync(TEntity entity);
-    Task AddRangeAsync(IEnumerable<TEntity> entities);
+    Task AddAsync(TEntity entity, CancellationToken? cancellationToken  = null);
+    Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken  = null);
 
     void Remove(TId id);
     void RemoveRange(IEnumerable<TEntity> entities);

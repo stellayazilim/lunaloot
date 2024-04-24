@@ -10,6 +10,12 @@ public class Country: ValueObject
     public  string Name { get; init; }
     
     /// <summary>
+    /// User friendly country name,
+    /// eg USA insted of United States of America
+    /// </summary>
+    public string DisplayName { get; init; }
+    
+    /// <summary>
     /// Country code eg `1`
     /// </summary>
     public string?  AsciiCode { get; init; }

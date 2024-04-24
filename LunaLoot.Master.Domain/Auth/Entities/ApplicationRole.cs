@@ -7,37 +7,44 @@ namespace LunaLoot.Master.Domain.Auth.Entities;
 public class ApplicationRole: Entity<ApplicationRoleId>
 {
     public string Name { get; set; }
-
+    public byte Weight { get; init; }
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
     private  List<string> _perms;
     public IReadOnlyList<string> Perms => _perms.AsReadOnly();
-
-    private List<ApplicationUser> _users = new();
-    public IReadOnlyList<ApplicationUser> Users => _users.AsReadOnly();
-    
+  
     
     private ApplicationRole(
         ApplicationRoleId id,
         string name,
-        List<ApplicationUser> users,
+        byte weight,
         List<string> perms): base(id)
     {
         Name = name;
+        Weight = weight;
         _perms = perms;
-        _users = users;
     }
     
     private ApplicationRole() {}
 
     public static ApplicationRole CreateNew(
         string name,
-        List<ApplicationUser> users,
+        byte weight,
         List<string> perms) => new(
             ApplicationRoleId
                 .CreateNew(),
             name,
-            users,
+            weight,
             perms);
 
+    public static ApplicationRole Parse(
+        ApplicationRoleId id,
+        string name,
+        byte weight,
+        List<string> perms) => 
+        new(
+            id,
+            name,
+            weight,
+            perms);
 
 }

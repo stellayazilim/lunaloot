@@ -3,7 +3,7 @@ using LunaLoot.Master.Application.Auth.Commands.Register;
 
 namespace LunaLoot.Master.Application.Auth.Queries.LoginWithCredentials;
 
-public class LoginWithCredentialsQueryValidator: AbstractValidator<LoginWithCredentialsQuery>
+public class LoginWithCredentialsQueryValidator: AbstractValidator<LoginWithPasswordQuery>
 {
     public LoginWithCredentialsQueryValidator()
     {

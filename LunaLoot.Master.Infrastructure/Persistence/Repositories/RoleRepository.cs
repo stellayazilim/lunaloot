@@ -10,13 +10,5 @@ public class RoleRepository(
     DbContext dbContext) 
     :Repository<ApplicationRole, ApplicationRoleId>(dbContext), IRoleRepository
 {
-    public List<ApplicationUser> GetUsersInRole(ApplicationRole role)
-    {
-        return (from _role in _dbSet
-            where
-                _role.Name == role.Name
-            select role)
-            .FirstOrDefault()
-            .Users.ToList();
-    }
+   
 }

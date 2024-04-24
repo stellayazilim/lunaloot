@@ -2,9 +2,9 @@
 using LunaLoot.Master.Domain.Common.Primitives;
 namespace LunaLoot.Master.Domain.Auth.ValueObjects;
 
-public class ApplicationUserId: ValueObject
+public class ApplicationUserId: AggregateRootId<Guid>
 {
-    public Guid Value { get; private init;  }
+    public override Guid Value { get; protected set; }
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
@@ -15,8 +15,8 @@ public class ApplicationUserId: ValueObject
         Value = value;
     }
     
-    public ApplicationUserId() {} 
+    private  ApplicationUserId() {} 
 
     public static ApplicationUserId CreateNew() => new(Guid.NewGuid());
-    public static ApplicationUserId Parse(Guid id) => new(id);
+    public static ApplicationUserId Parse(Guid value) => new(value);
 }

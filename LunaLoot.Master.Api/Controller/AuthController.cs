@@ -5,6 +5,7 @@ using LunaLoot.Master.Application.Auth.Commands.Register;
 using LunaLoot.Master.Application.Auth.Queries.LoginWithCredentials;
 using LunaLoot.Master.Contracts.Auth.Login;
 using LunaLoot.Master.Contracts.Auth.Register;
+using LunaLoot.Master.Contracts.Common.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,18 +30,29 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> LoginWithCredentials(LoginRequest request)
     {
-        return await mediator.Send((LoginWithCredentialsQuery)request).Match(
-            Ok,
+        return await mediator.Send((LoginWithPasswordQuery)request).Match(
+            LoginResponse,
             Problem
         );
     }
 
     [HttpGet("")]
     [Authorize]
+    [RequirePerms(new string[]
+    {
+        "role.read.role"
+    })]
     public IActionResult TestAuth()
     {
-        var claims =  HttpContext.User.Identities;
+        
 
-        return Ok(claims.FirstOrDefault().Label);
+        return Ok();
+    }
+
+    private OkObjectResult LoginResponse(LoginWithPasswordQueryResult result)
+    {
+        var response = new LoginResponse();
+        response = result;
+        return Ok(response);
     }
 }

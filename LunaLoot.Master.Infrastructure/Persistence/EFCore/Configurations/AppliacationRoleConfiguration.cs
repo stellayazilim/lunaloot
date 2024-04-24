@@ -1,5 +1,4 @@
-﻿
-using LunaLoot.Master.Domain.Auth.Entities;
+﻿using LunaLoot.Master.Domain.Auth.Entities;
 using LunaLoot.Master.Domain.Auth.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,12 +17,24 @@ public class AppliacationRoleConfiguration: IEntityTypeConfiguration<Application
                 r => r.Value,
                 value => ApplicationRoleId.Parse(value)
             );
-
+        builder.Property(r => r.Name)
+            .HasMaxLength(64);
+        builder.Property(r => r.Weight)
+            .HasMaxLength(255);
+        builder.Property(u => u.CreatedAt)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValue(DateTime.UtcNow);
+        builder.Property(u => u.UpdatedAt)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValue(DateTime.UtcNow);
+        builder.Property(u => u.DeletedAt)
+            .ValueGeneratedOnUpdateSometimes();
         builder.Property(r => r.Perms)
             .HasConversion(
                 r => string.Join(',', r), 
                 value => value.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
         builder.Property(r => r.Name).IsRequired();
-        
+
+
     }
 }

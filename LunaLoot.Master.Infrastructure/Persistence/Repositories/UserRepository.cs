@@ -1,5 +1,6 @@
 ﻿using LunaLoot.Master.Application.Common.Persistence.Repositories;
 using LunaLoot.Master.Domain.Auth;
+using LunaLoot.Master.Domain.Auth.Entities;
 using LunaLoot.Master.Domain.Auth.ValueObjects;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,17 +12,22 @@ public class UserRepository(LunaLootMasterDbContext dbContext) :
 {
     public ApplicationUser? GetByEmail(string email)
     {
-        var user = from t
-                in _dbSet
+        var users = _dbSet.Include(u => u.Roles);
+
+        return (from t
+                in users
             where t.Email == email
-            select t;
-        return user.FirstOrDefault();
+            select t).FirstOrDefault();
     }
 
-    public Task<ApplicationUser?> GetByEmailAsync(string email)
+    public Task<ApplicationUser?> GetByEmailAsync(string email, CancellationToken? cancellationToken)
     {
-        return (from user in _dbSet
+        var users = (from user in _dbSet
             where user.Email == email
-            select user).FirstOrDefaultAsync();
+            select user);
+
+        return users
+            .Include(u => u.Roles)
+            .FirstOrDefaultAsync(cancellationToken ?? CancellationToken.None);
     }
 }

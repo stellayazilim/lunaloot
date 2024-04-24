@@ -10,7 +10,7 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
 
     protected readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
     
-    public async Task<TEntity?> GetByIdAsync(TId id)
+    public async Task<TEntity?> GetByIdAsync(TId id, CancellationToken? cancellationToken)
     {
         return await _dbSet.FindAsync(id);
     }
@@ -20,9 +20,9 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
         return _dbSet.Find(id);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken? cancellationToken)
     {
-        return await _dbSet.ToListAsync();
+        return await _dbSet.ToListAsync(cancellationToken ?? CancellationToken.None);
     }
 
     public IEnumerable<TEntity> GetAll()
@@ -35,24 +35,24 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
         _dbSet.Add(entity);
     }
     
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity, CancellationToken? cancellationToken)
     {
         await _dbSet.AddAsync(entity);
     }
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken)
     {
-        await _dbSet.AddRangeAsync(entities);
+        await _dbSet.AddRangeAsync(entities, cancellationToken ?? CancellationToken.None);
     }
 
     public void Remove(TId id)
     {
         throw new NotImplementedException();
     }
-    public async Task RemoveAsync(TId id)
+    public async Task RemoveAsync(TId id, CancellationToken? cancellationToken)
     {
         _dbSet.Remove(
-            await GetByIdAsync(id) ?? throw new InvalidOperationException());
+            await GetByIdAsync(id, cancellationToken ?? CancellationToken.None) ?? throw new InvalidOperationException());
     }
 
     public void RemoveRange(IEnumerable<TEntity> entities)

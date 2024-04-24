@@ -16,15 +16,19 @@ public sealed class UnitOfWorkBehavior<TRequest, TResponse>(
         if (!typeof(TRequest).Name.EndsWith("Command")) return await next();
 
         // ReSharper disable once ConvertToUsingDeclaration
-        using (var transactionScope = new TransactionScope()) 
+        using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) 
         {
+
             var result = await next();
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
             
             transactionScope.Complete();
+            
             return result;
         }
        
     }
+
+  
 }

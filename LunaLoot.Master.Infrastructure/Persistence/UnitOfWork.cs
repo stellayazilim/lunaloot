@@ -9,13 +9,12 @@ public class UnitOfWork(LunaLootMasterDbContext dbContext): IUnitOfWork
 {
     public IUserRepository UserRepository { get; init; } = new UserRepository(dbContext);
     public IRoleRepository RoleRepository { get; init; } = new RoleRepository(dbContext);
+    public IAddressRepository AddressRepository { get; init; } = new AddressRepository(dbContext);
     public void Dispose()
     {
          dbContext.Dispose();
     }
 
-
-   
     public int SaveChanges()
     {
         return dbContext.SaveChanges();

@@ -10,12 +10,12 @@ namespace LunaLoot.Master.Application.Auth.Queries.LoginWithCredentials;
 public class LoginWithPasswordQueryHandler
 (
     IUnitOfWork unitOfWork, ITokenGenerator tokenGenerator): IRequestHandler<
-    LoginWithCredentialsQuery, 
+    LoginWithPasswordQuery, 
     ErrorOr<LoginWithPasswordQueryResult>>
 {
     
     public async Task<ErrorOr<LoginWithPasswordQueryResult>> Handle(
-        LoginWithCredentialsQuery withPasswordQuery,
+        LoginWithPasswordQuery withPasswordQuery,
         CancellationToken cancellationToken)
     {
 

@@ -7,6 +7,5 @@ namespace LunaLoot.Master.Application.Common.Persistence.Repositories;
 public interface IRoleRepository: IRepository<ApplicationRole, ApplicationRoleId>
 {
    
-   List<ApplicationUser> GetUsersInRole(ApplicationRole role);
    
 }

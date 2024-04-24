@@ -14,14 +14,14 @@ public record LoginRequest()
     [JsonPropertyName("password")]
     public string Password { get; init; } = null!;
 
-    public static implicit operator LoginWithCredentialsQuery(LoginRequest request)
+    public static implicit operator LoginWithPasswordQuery(LoginRequest request)
     {
-        return new LoginWithCredentialsQuery(
+        return new LoginWithPasswordQuery(
             Email: request.Email,
             Password: request.Password);
     }
 
-    public static implicit operator LoginRequest(LoginWithCredentialsQuery withPasswordQuery)
+    public static implicit operator LoginRequest(LoginWithPasswordQuery withPasswordQuery)
     {
         return new LoginRequest()
         {

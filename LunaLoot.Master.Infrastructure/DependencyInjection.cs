@@ -46,14 +46,17 @@ public static class DependencyInjection
                 ValidIssuer = settings.Issuer,
                 ValidAudience = settings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(settings.Secret))
+                    Encoding.UTF8.GetBytes(settings.Secret)),
             });
+        
     }
 
     private static void AddPersistence(this IServiceCollection services)
     {
-        services.AddDbContext<LunaLootMasterDbContext>( options =>
-            options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=LunaLootMaster;User Id=postgres;Password=postgres;")
-            );
+        services.AddDbContext<LunaLootMasterDbContext>(options =>
+            {
+                options.UseNpgsql(
+                    "Server=127.0.0.1;Port=5432;Database=LunaLootMaster;User Id=postgres;Password=postgres;");
+            });
     }
 }

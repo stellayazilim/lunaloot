@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\LunaLoot.Master.Application\LunaLoot.Master.Application.csproj" />
+      <ProjectReference Include="..\LunaLoot.Master.Infrastructure\LunaLoot.Master.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

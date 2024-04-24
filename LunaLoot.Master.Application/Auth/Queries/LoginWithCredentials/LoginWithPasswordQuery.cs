@@ -3,7 +3,7 @@ using MediatR;
 
 namespace LunaLoot.Master.Application.Auth.Queries.LoginWithCredentials;
 
-public record LoginWithCredentialsQuery(
+public record LoginWithPasswordQuery(
     string Email,
     string Password
 ) : IRequest<ErrorOr<LoginWithPasswordQueryResult>>;
