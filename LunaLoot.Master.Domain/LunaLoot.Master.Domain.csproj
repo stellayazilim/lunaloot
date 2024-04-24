@@ -8,10 +8,13 @@
 
     <ItemGroup>
       <PackageReference Include="ErrorOr" Version="2.0.1" />
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
       <PackageReference Include="shortid" Version="4.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Account\" />
       <Folder Include="Common\Constants\" />
     </ItemGroup>
 

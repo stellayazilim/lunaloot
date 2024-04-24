@@ -1,11 +1,9 @@
 ﻿using LunaLoot.Master.Application.Common.Persistence.Repositories;
 using LunaLoot.Master.Domain.Auth;
-using LunaLoot.Master.Domain.Auth.Entities;
 using LunaLoot.Master.Domain.Auth.ValueObjects;
-using LunaLoot.Master.Infrastructure.Persistence.EFCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace LunaLoot.Master.Infrastructure.Persistence.Repositories;
+namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Repositories;
 
 public class UserRepository(LunaLootMasterDbContext dbContext) :
     Repository<ApplicationUser, ApplicationUserId>(dbContext), IUserRepository

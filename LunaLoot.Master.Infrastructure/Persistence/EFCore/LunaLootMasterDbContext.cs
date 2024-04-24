@@ -1,22 +1,32 @@
 ﻿using System.Reflection;
 using LunaLoot.Master.Domain.Address;
-using LunaLoot.Master.Domain.Auth;
-using LunaLoot.Master.Domain.Auth.Entities;
+using LunaLoot.Master.Domain.Common.Interfaces;
+using LunaLoot.Master.Infrastructure.Identity;
+using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 // ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore;
 
 public class LunaLootMasterDbContext(
-    DbContextOptions<LunaLootMasterDbContext> options) : DbContext(options)
+    PublishDomainEventInterceptor publishDomainEventInterceptor,
+    DbContextOptions<LunaLootMasterDbContext> options) :IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
 {
-    public DbSet<ApplicationUser> ApplicationUsers { get; init; } = null!;
-    public DbSet<ApplicationRole> ApplicationRoles { get; init; } = null!;
-    public DbSet<Address> Addresses { get; set; } = null!;
+
+    public DbSet<Address> Addresses => Set<Address>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder
+            .Ignore<List<IDomainEvent>>()
+            .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(publishDomainEventInterceptor);
+        base.OnConfiguring(optionsBuilder);
     }
 }
