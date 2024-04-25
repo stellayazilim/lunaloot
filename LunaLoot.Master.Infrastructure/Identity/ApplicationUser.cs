@@ -4,5 +4,5 @@ namespace LunaLoot.Master.Infrastructure.Identity;
 
 public class ApplicationUser: IdentityUser<string>
 {
-    
+    public ICollection<ApplicationRole> Roles { get; set; }
 }

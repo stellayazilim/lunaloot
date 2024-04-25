@@ -8,7 +8,7 @@ namespace LunaLoot.Master.Infrastructure.Identity;
 
 public class IdentityService(
     UserManager<ApplicationUser> userManager,
-    IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
+    ApplicationUserClaimsPrincipalFactory userClaimsPrincipalFactory,
     IAuthorizationService authorizationService)
     : IIdentityService
 {

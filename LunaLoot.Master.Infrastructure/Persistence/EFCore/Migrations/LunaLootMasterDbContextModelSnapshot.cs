@@ -40,7 +40,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 4, 24, 14, 21, 20, 315, DateTimeKind.Utc).AddTicks(5857));
+                        .HasDefaultValue(new DateTime(2024, 4, 24, 17, 43, 30, 315, DateTimeKind.Utc).AddTicks(4037));
 
                     b.Property<string>("DeleteReason")
                         .HasColumnType("text");
@@ -82,7 +82,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 4, 24, 14, 21, 20, 315, DateTimeKind.Utc).AddTicks(6050));
+                        .HasDefaultValue(new DateTime(2024, 4, 24, 17, 43, 30, 315, DateTimeKind.Utc).AddTicks(4251));
 
                     b.HasKey("Id");
 
@@ -118,7 +118,9 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
             modelBuilder.Entity("LunaLoot.Master.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("RVJrqv_K");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");

@@ -1,6 +1,7 @@
 using LunaLoot.Master.Api;
 using LunaLoot.Master.Application;
 using LunaLoot.Master.Infrastructure;
+using LunaLoot.Master.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -18,6 +19,8 @@ var app = builder.Build();
         app.UseSwaggerUI();
         app.UseExceptionHandler("/Error");
     }
+
+    
     app.MapControllers();
     app.UseExceptionHandler();
     app.UseAuthentication();
@@ -25,7 +28,7 @@ var app = builder.Build();
     app.UseAntiforgery();
     app.UseHttpsRedirection();
     app.Run();
-
+    
 }
     
 

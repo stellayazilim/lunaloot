@@ -1,4 +1,6 @@
 ﻿using LunaLoot.Master.Api.Common.Errors;
+using LunaLoot.Master.Api.Services;
+using LunaLoot.Master.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace LunaLoot.Master.Api;
@@ -7,6 +9,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
+        services.AddScoped<IUser, CurrentUser>();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddProblemDetails();
