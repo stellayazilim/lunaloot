@@ -24,10 +24,10 @@ public sealed class UnitOfWorkBehavior<TRequest, TResponse>(
             await unitOfWork.SaveChangesAsync(cancellationToken);
             
             transactionScope.Complete();
-            
             return result;
         }
-       
+        
+        
     }
 
   

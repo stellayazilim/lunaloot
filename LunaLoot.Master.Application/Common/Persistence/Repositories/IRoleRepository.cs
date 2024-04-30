@@ -1,10 +1,9 @@
-﻿using LunaLoot.Master.Domain.Auth;
-using LunaLoot.Master.Domain.Auth.Entities;
-using LunaLoot.Master.Domain.Auth.ValueObjects;
+﻿using LunaLoot.Master.Domain.Identity;
+using LunaLoot.Master.Domain.Identity.ValueObjects;
 
 namespace LunaLoot.Master.Application.Common.Persistence.Repositories;
 
-public interface IRoleRepository: IRepository<ApplicationRole, ApplicationRoleId>
+public interface IRoleRepository: IRepository<IdentityRole, IdentityRoleId>
 {
    
    

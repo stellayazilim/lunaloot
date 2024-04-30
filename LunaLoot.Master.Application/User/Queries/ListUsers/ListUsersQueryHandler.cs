@@ -13,7 +13,7 @@ public class ListUsersQueryHandler
 {
     public async Task<ErrorOr<ListUsersQueryResult>> Handle(ListUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await unitOfWork.UserRepository.GetAllAsync();
+        var users = await unitOfWork.AccountRepository.GetAllAsync();
         throw new NotImplementedException();
     }
 }

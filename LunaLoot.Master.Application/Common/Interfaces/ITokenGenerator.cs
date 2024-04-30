@@ -1,8 +1,8 @@
-﻿using LunaLoot.Master.Domain.Auth;
+﻿using LunaLoot.Master.Domain.Identity;
 
 namespace LunaLoot.Master.Application.Common.Interfaces;
 
 public interface ITokenGenerator
 {
-    string GenerateToken(ApplicationUser user);
+    string GenerateToken(IdentityUser user);
 }

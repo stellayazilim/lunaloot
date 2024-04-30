@@ -1,5 +1,5 @@
-﻿using LunaLoot.Master.Domain.Common.Enums;
-using LunaLoot.Master.Infrastructure.Auth;
+﻿using LunaLoot.Master.Contracts.Helpers;
+using LunaLoot.Master.Domain.Identity.Enums;
 
 namespace LunaLoot.Master.Contracts.Common.Attributes;
 
@@ -9,24 +9,20 @@ public class AuthorizeAttribute: Microsoft.AspNetCore.Authorization.AuthorizeAtt
     public AuthorizeAttribute() {}
     public AuthorizeAttribute(string policy): base(policy) {}
 
-    public AuthorizeAttribute(Permissions permissions)
+    public AuthorizeAttribute(Permissions permission)
     {
-        Permissions = permissions;
+        Permissions = permission;
     }
 
     public Permissions Permissions
     {
-        get
-        {
-            return !string.IsNullOrEmpty(Policy)
+        get =>
+            !string.IsNullOrEmpty(Policy)
                 ? PolicyNameHelper.GetPermissionsFrom(Policy)
                 : Permissions.None;
-        }
-        set
-        {
+        set =>
             Policy = value != Permissions.None
                 ? PolicyNameHelper.GeneratePolicyNameFor(value)
                 : string.Empty;
-        }
     }
 }

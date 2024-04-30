@@ -13,7 +13,7 @@ public abstract class Entity<TId>: IEquatable<Entity<TId>>, IHasDomainEvents
     /// Gets or inits the value of the id
     /// </summary>
     // ReSharper disable once NullableWarningSuppressionIsUsed
-    public TId Id { get; protected init; } = default!;
+    public TId Id { get; protected set; } = default!;
 
     /// <summary>
     /// The domain events
@@ -26,17 +26,17 @@ public abstract class Entity<TId>: IEquatable<Entity<TId>>, IHasDomainEvents
     /// <summary>
     /// Gets or inits the value of the created at
     /// </summary>
-    public DateTime CreatedAt { get; protected init; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
     
     /// <summary>
     /// Gets or inits the value of the updated at
     /// </summary>
-    public DateTime UpdatedAt { get; protected init; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; protected set; } = DateTime.UtcNow;
     
     /// <summary>
     /// Gets or inits the value of the deleted at
     /// </summary>
-    public DateTime? DeletedAt { get; protected init; } 
+    public DateTime? DeletedAt { get; protected set; } 
     
     /// <summary>
     /// Gets or inits the value of the delete reason

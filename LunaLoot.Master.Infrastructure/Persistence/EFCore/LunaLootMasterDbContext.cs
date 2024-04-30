@@ -1,11 +1,14 @@
 using System.Reflection;
+using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Domain.Address;
 using LunaLoot.Master.Domain.Common.Interfaces;
-using LunaLoot.Master.Infrastructure.Identity;
+using LunaLoot.Master.Domain.Identity.Entities;
+using LunaLoot.Master.Domain.Identity.ValueObjects;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using shortid;
+using IdentityRole = LunaLoot.Master.Domain.Identity.IdentityRole;
+using IdentityUser = LunaLoot.Master.Domain.Identity.IdentityUser;
 
 // ReSharper disable NullableWarningSuppressionIsUsed
 
@@ -17,16 +20,21 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore;
 /// <seealso cref="IdentityDbContext{ApplicationUser, ApplicationRole, string}"/>
 public class LunaLootMasterDbContext(
     PublishDomainEventInterceptor publishDomainEventInterceptor,
-    DbContextOptions<LunaLootMasterDbContext> options) :IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
+    DbContextOptions<LunaLootMasterDbContext> options) : DbContext(options), ILunaLootMasterDbContext
 {
     /// <summary>
     /// Gets the value of the application roles
     /// </summary>
-    public DbSet<ApplicationRole> ApplicationRoles => Set<ApplicationRole>();
+    public DbSet<IdentityRole> IdentityRoles => Set<IdentityRole>();
     /// <summary>
     /// Gets the value of the application users
     /// </summary>
-    public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
+    public DbSet<IdentityUser> IdentityUsers => Set<IdentityUser>();
+
+
+    public DbSet<IdentityLogin> IdentityLogins => Set<IdentityLogin>();
+
+    public DbSet<IdentityUserRole> IdentityUserRoles => Set<IdentityUserRole>();
     /// <summary>
     /// Gets the value of the addresses
     /// </summary>
@@ -38,7 +46,6 @@ public class LunaLootMasterDbContext(
     /// <param name="modelBuilder">The model builder</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ApplicationUser>().Property(x => x.Id).ValueGeneratedOnAdd().HasDefaultValue(ShortId.Generate());
         modelBuilder
             .Ignore<List<IDomainEvent>>()
             .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -56,4 +63,10 @@ public class LunaLootMasterDbContext(
             .AddInterceptors(publishDomainEventInterceptor);
         base.OnConfiguring(optionsBuilder);
     }
+
+    public Task<int> SaveChangesAsync(CancellationToken? cancellationToken)
+    {
+        return base.SaveChangesAsync(cancellationToken ?? CancellationToken.None);
+    }
+
 }
