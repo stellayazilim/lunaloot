@@ -4,13 +4,13 @@ using LunaLoot.Master.Application.Features.Identity.Interfaces;
 using LunaLoot.Master.Domain.Identity;
 using MediatR;
 
-namespace LunaLoot.Master.Application.Features.Identity.Commands.RegisterRole;
+namespace LunaLoot.Master.Application.Features.Identity.Commands.CreateRole;
 
-public class RoleCommandHandler
+public class CreateRoleCommandHandler
     (
-        IIdentityService identityService): IRequestHandler<RegisterRoleCommand, ErrorOr<EmptyResult>>
+        IIdentityService identityService): IRequestHandler<CreateRoleCommand, ErrorOr<EmptyResult>>
 {
-    public async Task<ErrorOr<EmptyResult>> Handle(RegisterRoleCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<EmptyResult>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
 
         await identityService.RoleManager.CreateRoleAsync(IdentityRole.CreateNew(
@@ -20,6 +20,6 @@ public class RoleCommandHandler
             permissions: request.Permissions.ToList(),
             users: new()
             ), cancellationToken);
-        throw new NotImplementedException();
+        return new ErrorOr<EmptyResult>();
     }
 }

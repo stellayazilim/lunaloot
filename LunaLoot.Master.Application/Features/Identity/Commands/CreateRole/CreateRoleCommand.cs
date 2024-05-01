@@ -1,12 +1,11 @@
-﻿using System.Windows.Input;
-using ErrorOr;
+﻿using ErrorOr;
 using LunaLoot.Master.Application.Common.Models;
 using LunaLoot.Master.Domain.Identity.Enums;
 using MediatR;
 
-namespace LunaLoot.Master.Application.Features.Identity.Commands.RegisterRole;
+namespace LunaLoot.Master.Application.Features.Identity.Commands.CreateRole;
 
-public record RegisterRoleCommand(
+public record CreateRoleCommand(
     string Name,
     string Description,
     UInt16 Weight,

@@ -10,25 +10,37 @@ namespace LunaLoot.Master.Application.Features.Identity.Interfaces;
 /// </summary>
 public interface IRoleManager
 {
-    /// <summary>
-    /// Creates new role on the system
-    /// </summary>
-    /// <param name="role"></param>
+    
     #region CreateRole
+        /// <summary>
+        /// Creates new role on the system
+        /// </summary>
+        /// <param name="role"></param>
         void CreateRole(IdentityRole role);
+
         /// <summary>
         /// Creates the role using the specified role
         /// </summary>
         /// <param name="role">The role</param>
+        /// <param name="cancellationToken"></param>
         Task CreateRoleAsync(IdentityRole role, CancellationToken? cancellationToken);
     #endregion
+
     
+    #region List Roles
+
+    List<IdentityRole> ListRoles();
+    Task<List<IdentityRole>> ListRolesAsync(CancellationToken? cancellationToken);
+    #endregion
+    
+    
+    #region Add role to user
     /// <summary>
     ///  associate existiong user with existing role
     /// </summary>
     /// <param name="user"></param>
     /// <param name="role"></param>
-    #region Add role to user
+    
     void AddRoleToUser(IdentityUser user, IdentityRole role);
     /// <summary>
     /// Adds the role to user using the specified user
@@ -63,12 +75,13 @@ public interface IRoleManager
     #endregion
     
     
+    #region Remove role from user
     /// <summary>
     ///  remove association from existiong user with existing role
     /// </summary>
     /// <param name="user"></param>
     /// <param name="role"></param>
-    #region Remove role from user
+    
     Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRole role);
     /// <summary>
     /// Removes the role from user using the specified user
@@ -84,13 +97,13 @@ public interface IRoleManager
     Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRoleIdRef roleId);
     #endregion
 
-
+    
+    #region Get users by role
     /// <summary>
     /// Get all users associated with the role
     /// </summary>
     /// <param name="role"></param>
     /// <returns>collection of Users</returns>
-    #region Get users by role
     Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRole role);
     /// <summary>
     /// Gets the users by role using the specified role id

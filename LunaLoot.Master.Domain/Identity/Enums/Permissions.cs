@@ -9,8 +9,9 @@ public  enum Permissions
 {
 
    None = 0,
-   ReadUsers = 1,
+   ReadUser,
+   EditUser,
+   ReadRole,
+   EditRole,
    All = ~None
-    
-
 }

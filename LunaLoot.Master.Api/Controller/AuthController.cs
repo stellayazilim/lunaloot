@@ -47,7 +47,7 @@ public class AuthController(
     }
 
     [HttpGet("")]
-    [Authorize(Permissions.ReadUsers)]
+    [Authorize(Permissions.ReadUser)]
     public async void Protected()
     {
         

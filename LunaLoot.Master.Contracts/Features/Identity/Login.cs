@@ -30,7 +30,7 @@ public record LoginRequest
 public record LoginResponse
 {
     [JsonPropertyName("user")]
-    public LoginResponseUser User { get; set; }
+    public LoginResponseUser User { get; set; } 
     
     [JsonPropertyName("accessToken")]
     public string AccessToken { get; set; }

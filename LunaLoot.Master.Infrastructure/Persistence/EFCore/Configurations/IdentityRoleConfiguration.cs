@@ -38,7 +38,7 @@ public class IdentityRoleConfiguration : IEntityTypeConfiguration<IdentityRole>
 
         var permsArr = value.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
-        return permsArr.Select(x => (Permissions)int.Parse(x)).ToList();
+        return permsArr.Select(x => (Permissions)Enum.Parse(typeof(Permissions), x)).ToList();
     }
 
 }

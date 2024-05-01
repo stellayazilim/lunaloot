@@ -15,7 +15,7 @@ public class RoleManager(
     private DbSet<IdentityRole> RoleSet => dbContext.IdentityRoles;
     private  DbSet<IdentityUserRole> UserRoleSet => dbContext.IdentityUserRoles;
 
-
+    
 
     #region Create Role
     
@@ -34,24 +34,38 @@ public class RoleManager(
         
         
     #endregion
- 
+
+    public List<IdentityRole> ListRoles()
+    {
+        return RoleSet.ToList();
+    }
+
+    public async Task<List<IdentityRole>> ListRolesAsync(CancellationToken? cancellationToken)
+    {
+        return  await RoleSet.ToListAsync(cancellationToken ?? CancellationToken.None);
+    }
+
+
+    #region Add Role To User
+        public void AddRoleToUser(IdentityUser user, IdentityRole role)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRoleToUser(IdentityUser user, IdentityRoleId role)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRoleToUser(IdentityUser user, IdentityRoleIdRef role)
+        {
+            throw new NotImplementedException();
+        }
+
     
 
-    public void AddRoleToUser(IdentityUser user, IdentityRole role)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddRoleToUser(IdentityUser user, IdentityRoleId role)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddRoleToUser(IdentityUser user, IdentityRoleIdRef role)
-    {
-        throw new NotImplementedException();
-    }
-
+    #endregion
+    
     public Task AddRoleToUserAsync(IdentityUser user, IdentityRole role)
     {
         var userRole = new IdentityUserRole(IdentityUserRoleId.CreateNew());
