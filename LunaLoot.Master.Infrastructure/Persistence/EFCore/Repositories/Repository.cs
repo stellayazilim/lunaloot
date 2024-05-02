@@ -1,4 +1,7 @@
-﻿using LunaLoot.Master.Application.Common.Persistence.Repositories;
+﻿using ErrorOr;
+using LunaLoot.Master.Application.Common.Models;
+using LunaLoot.Master.Application.Common.Persistence.Repositories;
+using LunaLoot.Master.Domain.Common.Errors;
 using Microsoft.EntityFrameworkCore;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Repositories;
@@ -8,55 +11,64 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
     where TId : notnull
 {
 
-    protected readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
+    protected readonly DbSet<TEntity> DbSet = dbContext.Set<TEntity>();
     
-    public async Task<TEntity?> GetByIdAsync(TId id, CancellationToken? cancellationToken)
+    public async Task<ErrorOr<TEntity>> GetByIdAsync(TId id, CancellationToken? cancellationToken)
     {
-        return await _dbSet.FindAsync(id);
+        var record = await DbSet.FindAsync(id);
+        if (record is null) return Errors.Generic<TEntity>.DoesNotExistError();
+        return record;
     }
 
-    public TEntity? GetById(TId id)
+    public ErrorOr<TEntity?> GetById(TId id)
     {
-        return _dbSet.Find(id);
+        return DbSet.Find(id);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken? cancellationToken)
+    public async Task<ErrorOr<List<TEntity>>> GetAllAsync(CancellationToken? cancellationToken)
     {
-        return await _dbSet.ToListAsync(cancellationToken ?? CancellationToken.None);
+        return await DbSet.ToListAsync(cancellationToken ?? CancellationToken.None);
     }
 
-    public IEnumerable<TEntity> GetAll()
+    public ErrorOr<List<TEntity>> GetAll()
     {
-        return _dbSet.ToList();
+        return DbSet.ToList();
     }
 
-    public void Add(TEntity entity)
+    public ErrorOr<EmptyResult> Add(TEntity entity)
     {
-        _dbSet.Add(entity);
+        DbSet.Add(entity);
+        return new EmptyResult();
     }
     
-    public async Task AddAsync(TEntity entity, CancellationToken? cancellationToken)
+    public async Task<ErrorOr<EmptyResult>> AddAsync(TEntity entity, CancellationToken? cancellationToken)
     {
-        await _dbSet.AddAsync(entity);
+        await DbSet.AddAsync(entity);
+        return new EmptyResult();
     }
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken)
+    public async Task<ErrorOr<EmptyResult>> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken)
     {
-        await _dbSet.AddRangeAsync(entities, cancellationToken ?? CancellationToken.None);
+        await DbSet.AddRangeAsync(entities, cancellationToken ?? CancellationToken.None);
+        return new EmptyResult();
     }
 
-    public void Remove(TId id)
+
+    public  ErrorOr<EmptyResult> Update(TEntity entity)
     {
-        throw new NotImplementedException();
+        DbSet.Update(entity);
+        return new EmptyResult();
     }
-    public async Task RemoveAsync(TId id, CancellationToken? cancellationToken)
+    
+    public ErrorOr<EmptyResult> Remove(TId id)
     {
-        _dbSet.Remove(
-            await GetByIdAsync(id, cancellationToken ?? CancellationToken.None) ?? throw new InvalidOperationException());
+        return new EmptyResult();
     }
 
-    public void RemoveRange(IEnumerable<TEntity> entities)
+
+    public ErrorOr<EmptyResult> RemoveRange(IEnumerable<TEntity> entities)
     {
-        _dbSet.RemoveRange(entities);
+        DbSet.RemoveRange(entities);
+        return new EmptyResult();
     }
 }

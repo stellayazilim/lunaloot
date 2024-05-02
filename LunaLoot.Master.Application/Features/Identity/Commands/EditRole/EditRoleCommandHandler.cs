@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using LunaLoot.Master.Application.Common.Models;
+using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Application.Common.Services;
 using LunaLoot.Master.Application.Features.Identity.Interfaces;
 using MediatR;
@@ -7,22 +8,22 @@ using MediatR;
 namespace LunaLoot.Master.Application.Features.Identity.Commands.EditRole;
 
 public class EditRoleCommandHandler(
-    IIdentityService identityService,
+    IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider
     ): IRequestHandler<EditRoleCommand, ErrorOr<EmptyResult>>
 {
     public async Task<ErrorOr<EmptyResult>> Handle(EditRoleCommand request, CancellationToken cancellationToken)
     {
-        var role = await identityService.RoleManager.GetRoleByIdAsync(request.RoleId, cancellationToken);
+        var result = await unitOfWork.RoleRepository.GetByIdAsync(request.RoleId);
 
-        if (role is null) return new EmptyResult();
+        if (result.IsError) return result.Errors;
+
+        var role = result.Value;
+        
         role.Name = request.Name;
         role.Description = request.Description;
         role.Weight = request.Weight;
         role.UpdatedAt = dateTimeProvider.UtcNow;
-
-        await identityService.RoleManager.UpdateRoleAsync(role, cancellationToken);
-
-        return new EmptyResult();
+        return unitOfWork.RoleRepository.Update(role);
     }
 }

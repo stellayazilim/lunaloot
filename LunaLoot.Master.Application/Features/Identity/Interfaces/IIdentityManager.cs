@@ -1,4 +1,8 @@
+using ErrorOr;
+using LunaLoot.Master.Application.Features.Identity.Models;
 using LunaLoot.Master.Domain.Identity;
+using LunaLoot.Master.Domain.Identity.ValueObjects;
+using EmptyResult = LunaLoot.Master.Application.Common.Models.EmptyResult;
 
 namespace LunaLoot.Master.Application.Features.Identity.Interfaces;
 
@@ -7,32 +11,35 @@ namespace LunaLoot.Master.Application.Features.Identity.Interfaces;
 /// </summary>
 public interface IIdentityManager
 {
+    Task<ErrorOr<IdentityUser>> GetByEmailAsync(string email, CancellationToken? cancellationToken);
+    Task<ErrorOr<LoginResult>> LoginWithCredentialsAsync(IdentityUser user, CancellationToken? cancellationToken);
+    Task<ErrorOr<LoginResult>> LoginWithRefreshTokenAsync(string refreshToken);
+    Task<ErrorOr<EmptyResult>> RegisterAsync(IdentityUser user, CancellationToken? cancellationToken);
+    Task<ErrorOr<EmptyResult>> ChangePasswordAsync(
+        IdentityUser user, 
+        PasswordHash passwordHash, 
+        CancellationToken? cancellationToken);
+    ErrorOr<Task> ChangeEmailAsync(
+        IdentityUser user, 
+        string email, 
+        CancellationToken? cancellationToken);
+    Task<ErrorOr<EmptyResult>> JoinUserToRoleAsync(
+        IdentityUser user, 
+        IdentityRole role, 
+        CancellationToken? cancellationToken);
+
+    ErrorOr<Task> LeaveRolesToUserAsync(
+        IdentityUser user,
+        IdentityRole[] roles,
+        CancellationToken? cancellationToken);
     
-    /// <summary>
-    /// Logins the user with credentials using the specified user
-    /// </summary>
-    /// <param name="user">The user</param>
-    /// <returns>The login model</returns>
-    LoginResult LoginUserWithCredentials(IdentityUser user);
-    /// <summary>
-    /// Logins the user with credentials using the specified user
-    /// </summary>
-    /// <param name="user">The user</param>
-    /// <returns>A task containing the login model</returns>
-    Task<LoginResult> LoginUserWithCredentialsAsync(IdentityUser user, CancellationToken? cancellationToken);
-
-
-    /// <summary>
-    /// Logins the user with refresh token using the specified user
-    /// </summary>
-    /// <param name="user">The user</param>
-    /// <returns>The login model</returns>
-    LoginResult LoginUserWithRefreshToken(IdentityUser user);
-    /// <summary>
-    /// Logins the user with refresh token using the specified user
-    /// </summary>
-    /// <param name="user">The user</param>
-    /// <returns>A task containing the login model</returns>
-    Task<LoginResult> LoginUserWithRefreshTokenAsync(IdentityUser user);
-
+    ErrorOr<Task> RestrictUserAsync(
+        IdentityUser user, 
+        string reason, 
+        CancellationToken? cancellationToken);
+    ErrorOr<Task> UnRestrictUserAsync(
+        IdentityUser user,
+        string reason,
+        CancellationToken? cancellationToken
+    );
 }

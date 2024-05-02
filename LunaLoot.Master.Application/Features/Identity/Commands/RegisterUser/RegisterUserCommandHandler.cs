@@ -8,7 +8,7 @@ using MediatR;
 namespace LunaLoot.Master.Application.Features.Identity.Commands.RegisterUser;
 
 public class RegisterUserCommandHandler(
-    IIdentityService identityService
+    IIdentityManager identityManager
     ): IRequestHandler<RegisterUserCommand, ErrorOr<EmptyResult>>
 {
     public async Task<ErrorOr<EmptyResult>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -21,8 +21,6 @@ public class RegisterUserCommandHandler(
             new()
         );
 
-        await identityService.UserManager.CreateUserAsync(user);
-        
-        return new EmptyResult();
+        return await identityManager.RegisterAsync(user, cancellationToken);
     }
 }

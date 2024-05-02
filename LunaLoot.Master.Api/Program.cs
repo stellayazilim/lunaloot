@@ -12,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
         .AddPresentation()
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
+    
+    builder.Logging.ClearProviders();
+    builder.Logging.AddConsole();
     builder.Services.AddAuthentication();
 
     builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();

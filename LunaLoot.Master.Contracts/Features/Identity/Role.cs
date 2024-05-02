@@ -156,9 +156,7 @@ namespace LunaLoot.Master.Contracts.Features.Identity;
                 request.Name,
                 request.Description,
                 request.Weight,
-                request.Permissions
-                );
+                request.Permissions );
         }
     }
-
 #endregion

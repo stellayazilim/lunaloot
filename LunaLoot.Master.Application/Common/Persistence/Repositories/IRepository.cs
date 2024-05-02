@@ -1,4 +1,7 @@
-﻿namespace LunaLoot.Master.Application.Common.Persistence.Repositories;
+﻿using ErrorOr;
+using LunaLoot.Master.Application.Common.Models;
+
+namespace LunaLoot.Master.Application.Common.Persistence.Repositories;
 
 public interface IRepository<TEntity, in TId> where TEntity: class where TId: notnull
 {
@@ -7,7 +10,7 @@ public interface IRepository<TEntity, in TId> where TEntity: class where TId: no
     /// </summary>
     /// <param name="id"></param>
     /// <returns>TEntity</returns>
-    TEntity? GetById(TId id);
+    ErrorOr<TEntity?> GetById(TId id);
 
     /// <summary>
     /// asynchronous version of GetById
@@ -15,21 +18,21 @@ public interface IRepository<TEntity, in TId> where TEntity: class where TId: no
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns> Task<TEntity> </returns>
-    Task<TEntity?> GetByIdAsync(TId id,CancellationToken? cancellationToken  = null);
+    Task<ErrorOr<TEntity>> GetByIdAsync(TId id,CancellationToken? cancellationToken  = null);
     
     /// <summary>
     /// Get All entities
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken? cancellationToken  = null);
+    Task<ErrorOr<List<TEntity>>> GetAllAsync(CancellationToken? cancellationToken  = null);
     
     /// <summary>
     /// Get all entities asynchronously
     /// </summary>
     /// <returns></returns>
-    IEnumerable<TEntity> GetAll();
+    ErrorOr<List<TEntity>>  GetAll();
 
-    void Add(TEntity entity);
+    ErrorOr<EmptyResult> Add(TEntity entity);
     
     /// <summary>
     /// Adds an entity within transaction
@@ -38,9 +41,10 @@ public interface IRepository<TEntity, in TId> where TEntity: class where TId: no
     /// <param name="entity"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task AddAsync(TEntity entity, CancellationToken? cancellationToken  = null);
-    Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken  = null);
+    Task<ErrorOr<EmptyResult>> AddAsync(TEntity entity, CancellationToken? cancellationToken  = null);
+    Task<ErrorOr<EmptyResult>> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken  = null);
 
-    void Remove(TId id);
-    void RemoveRange(IEnumerable<TEntity> entities);
+    ErrorOr<EmptyResult> Update(TEntity entity);
+    ErrorOr<EmptyResult> Remove(TId id);
+    ErrorOr<EmptyResult> RemoveRange(IEnumerable<TEntity> entities);
 }

@@ -7,15 +7,20 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore;
 
 public class UnitOfWork(LunaLootMasterDbContext dbContext): IUnitOfWork
 {
-    // public IAccountRepository AccountRepository { get; init; } = new AccountRepository(dbContext);
-    // public IRoleRepository RoleRepository { get; init; } = new RoleRepository(dbContext);
-    public IAccountRepository AccountRepository { get; init; }
 
+    public  IAddressRepository AddressRepository { get; init; } = new AddressRepository(dbContext);
 
-    public IAddressRepository AddressRepository { get; init; } = new AddressRepository(dbContext);
+    public IUserRepository UserRepository { get; init; } = new UserRepository(dbContext);
+
+    public IRoleRepository RoleRepository { get; init; } = new RoleRepository(dbContext);
     public void Dispose()
     {
          dbContext.Dispose();
+    }
+
+    public async Task DisposeAsync()
+    {
+        await dbContext.DisposeAsync();
     }
 
     public int SaveChanges()

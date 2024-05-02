@@ -13,16 +13,19 @@ namespace LunaLoot.Master.Api.Controller;
 
 [Route("auth")]
 public class AuthController(
+    ILogger<AuthController> logger,
     ISender mediatr
     ): ApiController
 {
-
+    private readonly ILogger<AuthController> _logger = logger;
+    
     [AnonymousOnly]
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request,  CancellationToken cancellationToken)
     {
+        _logger.LogInformation($"Request receive: { DateTime.UtcNow }");
         if (!ModelState.IsValid) return Problem();
-       
+        _logger.LogInformation($"Model validate: { DateTime.UtcNow}");
         return await mediatr.Send((LoginQuery)request, cancellationToken)
             .Match(
                 new LoginResponse().ToActionResult,

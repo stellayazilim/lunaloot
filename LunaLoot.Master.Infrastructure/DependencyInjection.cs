@@ -38,9 +38,9 @@ public static class DependencyInjection
                     configuration.GetConnectionString("DefaultConnection")
                    );
             });
-
-        services.AddScoped<PublishDomainEventInterceptor>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<PublishDomainEventInterceptor>();
+   
 
     }
 }

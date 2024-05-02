@@ -22,10 +22,7 @@ public static class DependencyInjection
         // inject
 
         services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
-        services.AddScoped<IUserManager, UserManager>();
-        services.AddScoped<IRoleManager, RoleManager>();
         services.AddScoped<IIdentityManager, IdentityManager>();
-        services.AddScoped<IIdentityService, IdentityService>();
         
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()

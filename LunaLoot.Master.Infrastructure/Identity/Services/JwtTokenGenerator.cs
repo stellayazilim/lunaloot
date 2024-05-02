@@ -6,7 +6,6 @@ using LunaLoot.Master.Application.Common.Services;
 using LunaLoot.Master.Domain.Identity;
 using LunaLoot.Master.Domain.Identity.Enums;
 using LunaLoot.Master.Infrastructure.Identity.Configuration;
-using LunaLoot.Master.Infrastructure.Identity.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;

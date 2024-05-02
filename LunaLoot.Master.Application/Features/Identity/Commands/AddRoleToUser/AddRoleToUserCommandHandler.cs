@@ -1,27 +1,29 @@
 ﻿using ErrorOr;
 using LunaLoot.Master.Application.Common.Models;
+using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Application.Features.Identity.Interfaces;
-using LunaLoot.Master.Domain.Common.Errors.Auth;
+using LunaLoot.Master.Domain.Common.Errors;
 using MediatR;
 
 namespace LunaLoot.Master.Application.Features.Identity.Commands.AddRoleToUser;
 
 public class AddRoleToUserCommandHandler
     (
-        IIdentityService identityService
+        IIdentityManager identityManager,
+        IUnitOfWork unitOfWork
         ): IRequestHandler<AddRoleToUserCommand, ErrorOr<EmptyResult>>
 {
     public async Task<ErrorOr<EmptyResult>> Handle(AddRoleToUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await identityService.UserManager.GetUserByIdAsync(request.UserId);
 
-        if (user is null) return Errors.Auth.UserDoesNotExistError();
+        var user = await unitOfWork.UserRepository.GetByIdAsync(request.UserId, cancellationToken);
 
-        await identityService.RoleManager.AddRoleToUserAsync(
-            user,
-            request.RoleId
-        );
+        if (user.IsError) return user.Errors;
 
-        return new EmptyResult();
+        var role = unitOfWork.RoleRepository.GetByIdAsync(request.RoleId, cancellationToken).Result;
+
+        if (role.IsError) return role.Errors;
+
+        return await identityManager.JoinUserToRoleAsync(user.Value, role.Value, cancellationToken);
     }
 }
