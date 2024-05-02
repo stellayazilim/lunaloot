@@ -11,14 +11,14 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
 {
 
     [StringLength(32)]
-    public string Name { get; private init; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     [StringLength(128)]
-    public string? Description { get; private init; }
+    public string? Description { get;  set;  }
 
-    public UInt16 Weight { get; private init; }
+    public UInt16 Weight { get;  set; }
     
-    public Permissions Permissions { get; init; } 
+    public Permissions Permissions { get; set;  } 
     
     [JsonIgnore]
     public ICollection<IdentityUser> Users { get; } = new List<IdentityUser>();

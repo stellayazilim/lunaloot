@@ -11,6 +11,7 @@ public class AddRoleCommandHandler(
 {
     public async Task<ErrorOr<AddRoleCommandResult>> Handle(AddRoleCommand request, CancellationToken cancellationToken)
     {
+        // @todo add ErrorOr pattern for services & repositories
         await Task.CompletedTask;
 
         var role = IdentityRole.CreateNew(
@@ -21,16 +22,7 @@ public class AddRoleCommandHandler(
                 new ()
             
             );
-        // try
-        // {
-        //     await unitOfWork.IdentityService.AddAsync(role);
-        //
-        //     return new AddRoleCommandResult();
-        // }
-        // catch (Exception e)
-        // {
-        //     return Error.Failure();
-        // }
+
 
         return new AddRoleCommandResult();
     }

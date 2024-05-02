@@ -1,10 +1,14 @@
 ﻿using System.Text.Json.Serialization;
+using LunaLoot.Master.Application.Features.Identity.Commands.AddRoleToUser;
 using LunaLoot.Master.Application.Features.Identity.Commands.CreateRole;
+using LunaLoot.Master.Application.Features.Identity.Commands.EditRole;
 using LunaLoot.Master.Application.Features.Identity.Queries.Role.ListRoles;
 using LunaLoot.Master.Domain.Identity;
 using LunaLoot.Master.Domain.Identity.Enums;
+using LunaLoot.Master.Domain.Identity.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using EmptyResult = LunaLoot.Master.Application.Common.Models.EmptyResult;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace LunaLoot.Master.Contracts.Features.Identity;
 
@@ -32,8 +36,6 @@ namespace LunaLoot.Master.Contracts.Features.Identity;
             {
                 permissions |= x;
             });
-                
-
             return new CreateRoleCommand(
                 Name: request.Name,
                 Description: request.Description,
@@ -104,6 +106,58 @@ namespace LunaLoot.Master.Contracts.Features.Identity;
                 Weight = role.Weight,
                 Permissions = role.Permissions,
             };
+        }
+    }
+
+#endregion
+
+
+#region AddRoleToUser
+    public record AddRoleToUserRequest
+    {
+        [JsonPropertyName("userId")]
+        public Guid UserId { get; set; }
+        
+        [JsonPropertyName("roleId")]
+        public Guid RoleId { get; set; }
+
+        public static explicit operator AddRoleToUserCommand(AddRoleToUserRequest request)
+        {
+            return new AddRoleToUserCommand(
+                    IdentityUserId.Parse(request.UserId),
+                    IdentityRoleId.Parse(request.RoleId)
+                );
+        }
+    }
+#endregion
+
+#region EditRole
+    public record EditRoleRequest
+    {
+        [JsonPropertyName("id")]
+        public Guid Id { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("description")] 
+        public string? Description { get; set; } = string.Empty;
+        
+        [JsonPropertyName("weight")]
+        public ushort Weight { get; set; }
+
+        [JsonPropertyName("permissions")] 
+        public Permissions Permissions { get; set; }
+
+        public static explicit operator EditRoleCommand(EditRoleRequest request)
+        {
+            return new EditRoleCommand(
+                IdentityRoleId.Parse(request.Id),
+                request.Name,
+                request.Description,
+                request.Weight,
+                request.Permissions
+                );
         }
     }
 

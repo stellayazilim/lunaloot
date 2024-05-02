@@ -26,12 +26,12 @@ public abstract class Entity<TId>: IEquatable<Entity<TId>>, IHasDomainEvents
     /// <summary>
     /// Gets or inits the value of the created at
     /// </summary>
-    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; protected init; } = DateTime.UtcNow;
     
     /// <summary>
     /// Gets or inits the value of the updated at
     /// </summary>
-    public DateTime UpdatedAt { get; protected set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get;  set; } = DateTime.UtcNow;
     
     /// <summary>
     /// Gets or inits the value of the deleted at

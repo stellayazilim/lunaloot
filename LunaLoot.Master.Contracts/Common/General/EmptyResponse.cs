@@ -5,9 +5,7 @@ namespace LunaLoot.Master.Contracts.Common.General;
 
 public record EmptyResponse
 {
-
-
-    public IActionResult ToActionResult(EmptyResult result)
+    public static IActionResult ToActionResult(EmptyResult result)
     {
         return new OkObjectResult(new EmptyResponse());
     }

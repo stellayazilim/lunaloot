@@ -40,7 +40,7 @@ public class AuthController(
         if (!ModelState.IsValid) return Problem();
         return await mediatr.Send((RegisterUserCommand)request, cancellationToken)
             .Match(
-                 new EmptyResponse().ToActionResult,
+                 EmptyResponse.ToActionResult,
                  Problem
             );
 

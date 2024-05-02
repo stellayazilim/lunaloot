@@ -15,53 +15,18 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
         var roleClaim = context.User.FindAll(
             c => c.Type == CustomClaimTypes.Roles);
 
-
         var permissions = new List<Permissions>();      
         
-      
-
         var roles = roleClaim.Select( x => JsonConvert.DeserializeObject<JwtRoleClaimItem>(x.Value)).ToList();
 
-       
-        
         var hasPermission = roles?.Any(r =>
-        
            (r?.Permissions & requirement.Permissions) != 0 ? true : false );
         
- 
-
-   
         if (hasPermission is true)
         {
             context.Succeed(requirement);
             return Task.CompletedTask;
         }
-
-      
-
         return Task.CompletedTask;
     }
 }
-
-
-/*
-      if (permissionClaim == null)
-        {
-            return Task.CompletedTask;
-        }
-
-        if (!int.TryParse(permissionClaim.Value, out int permissionClaimValue))
-        {
-            return Task.CompletedTask;
-        }
-
-        var userPermissions = (Permissions)permissionClaimValue;
-
-        if ((userPermissions & requirement.Permissions) != 0)
-        {
-            context.Succeed(requirement);
-            return Task.CompletedTask;
-        }
-
-        return Task.CompletedTask;
-    }*/

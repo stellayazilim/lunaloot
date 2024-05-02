@@ -46,6 +46,13 @@ public class RoleManager(
     }
 
 
+    public async Task<IdentityRole?> GetRoleByIdAsync(
+        IdentityRoleId roleId, 
+        CancellationToken? cancellationToken)
+    {
+        return await RoleSet.FindAsync(roleId, cancellationToken ?? CancellationToken.None);
+    }
+
     #region Add Role To User
         public void AddRoleToUser(IdentityUser user, IdentityRole role)
         {
@@ -65,88 +72,103 @@ public class RoleManager(
     
 
     #endregion
-    
-    public Task AddRoleToUserAsync(IdentityUser user, IdentityRole role)
+
+    #region Add Role to user
+
+        public Task AddRoleToUserAsync(IdentityUser user, IdentityRole role)
+        {
+            var userRole = new IdentityUserRole(IdentityUserRoleId.CreateNew());
+
+            userRole.IdentityUserId = user.Id;
+            userRole.IdentityRoleId = role.Id;
+            
+            UserRoleSet.Add(userRole);
+
+            return Task.CompletedTask;
+        }
+
+        public Task AddRoleToUserAsync(IdentityUser user, IdentityRoleId role)
+        {
+            var userRole = new IdentityUserRole(IdentityUserRoleId.CreateNew());
+
+            userRole.IdentityUserId = user.Id;
+            userRole.IdentityRoleId = role;
+
+            UserRoleSet.Add(userRole);
+
+            return Task.CompletedTask;
+        }
+    #endregion
+
+    #region Edit role
+
+    public Task UpdateRoleAsync(IdentityRole role, CancellationToken? cancellationToken)
     {
-        var userRole = new IdentityUserRole(IdentityUserRoleId.CreateNew());
-
-        userRole.IdentityUserId = user.Id;
-        userRole.IdentityRoleId = role.Id;
-        
-        UserRoleSet.Add(userRole);
-
-        return Task.CompletedTask;
+        RoleSet.Update(role);
+        return dbContext.SaveChangesAsync(
+            cancellationToken ?? CancellationToken.None);
     }
 
-    public Task AddRoleToUserAsync(IdentityUser user, IdentityRoleId role)
-    {
-        var userRole = new IdentityUserRole(IdentityUserRoleId.CreateNew());
+    #endregion
 
-        userRole.IdentityUserId = user.Id;
-        userRole.IdentityRoleId = role;
+    #region Remove Role from User
 
-        UserRoleSet.Add(userRole);
+        public Task AddRoleToUserAsync(IdentityUser user, IdentityRoleIdRef role)
+        {
+            throw new NotImplementedException();
+        }
 
-        return Task.CompletedTask;
-    }
 
-   
+        public Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRole role)
+        {
+            throw new NotImplementedException();
+        }
 
-    public Task AddRoleToUserAsync(IdentityUser user, IdentityRoleIdRef role)
-    {
-        throw new NotImplementedException();
-    }
+        public Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRoleId roleId)
+        {
+            throw new NotImplementedException();
+        }
 
-    public Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRole role)
-    {
-        throw new NotImplementedException();
-    }
+        public Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRoleIdRef roleId)
+        {
+            throw new NotImplementedException();
+        }
 
-    public Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRoleId roleId)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task RemoveRoleFromUserAsync(IdentityUser user, IdentityRoleIdRef roleId)
-    {
-        throw new NotImplementedException();
-    }
+    #endregion
     
     #region Get Users by role
+        public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRole role)
+        {
+            // ReSharper disable once InconsistentNaming
+            var _role = await RoleSet.Where(x => x.Id == role.Id).FirstOrDefaultAsync();
+            if (_role is null)  return new List<IdentityUser>();
+            var users = _role?.Users;
+            return users ?? new List<IdentityUser>();
+        }
 
+        public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRoleId roleId)
+        {
+            var role = await RoleSet.Where(x => x.Id == roleId).FirstOrDefaultAsync();
+            if (role is null)  return new List<IdentityUser>();
+            var users = role?.Users;
+            return users ?? new List<IdentityUser>();
+        }
 
-    
-    public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRole role)
-    {
-        // ReSharper disable once InconsistentNaming
-        var _role = await RoleSet.Where(x => x.Id == role.Id).FirstOrDefaultAsync();
-        if (_role is null)  return new List<IdentityUser>();
-        var users = _role?.Users;
-        return users ?? new List<IdentityUser>();
-    }
+        public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRoleIdRef roleId)
+        {
+            var role = await RoleSet.Where(x => x.Id == roleId).FirstOrDefaultAsync();
+            if (role is null)  return new List<IdentityUser>();
+            var users = role?.Users;
+            return users ?? new List<IdentityUser>();
+        }
 
-    public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRoleId roleId)
-    {
-        var role = await RoleSet.Where(x => x.Id == roleId).FirstOrDefaultAsync();
-        if (role is null)  return new List<IdentityUser>();
-        var users = role?.Users;
-        return users ?? new List<IdentityUser>();
-    }
-
-    public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(IdentityRoleIdRef roleId)
-    {
-        var role = await RoleSet.Where(x => x.Id == roleId).FirstOrDefaultAsync();
-        if (role is null)  return new List<IdentityUser>();
-        var users = role?.Users;
-        return users ?? new List<IdentityUser>();
-    }
-
-    public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(string roleName)
-    {
-        var role = await RoleSet.Where(x => x.Name == roleName).FirstOrDefaultAsync();
-        if (role is null)  return new List<IdentityUser>();
-        var users = role?.Users;
-        return users ?? new List<IdentityUser>();
-    }
+        public async Task<ICollection<IdentityUser>> GetUsersByRoleAsync(string roleName)
+        {
+            var role = await RoleSet.Where(x => x.Name == roleName).FirstOrDefaultAsync();
+            if (role is null)  return new List<IdentityUser>();
+            var users = role?.Users;
+            return users ?? new List<IdentityUser>();
+        }
     #endregion
 }
