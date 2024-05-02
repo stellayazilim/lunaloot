@@ -23,7 +23,6 @@ public record LoginRequest
             Password:request.Password
             );
     }
-    
 };
 
 
