@@ -43,7 +43,14 @@ public class UserManager(LunaLootMasterDbContext dbContext): IUserManager, IDisp
         
         public async Task<IdentityUser?> GetUserByEmailAsync(string email)
         {
-            return await UserSet.Where(x => x.Email == email).FirstOrDefaultAsync();
+           var user = await UserSet
+                .IgnoreAutoIncludes()
+                .Include(x => x.Roles)
+                .Where(x => x.Email == email).FirstOrDefaultAsync();
+
+           
+
+           return user;
         }
         
         

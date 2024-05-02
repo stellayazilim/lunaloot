@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
 {
     [DbContext(typeof(LunaLootMasterDbContext))]
-    [Migration("20240428070954_Initial")]
+    [Migration("20240502104620_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,21 +24,6 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("IdentityRoleIdentityUser", b =>
-                {
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("IdentityRoleIdentityUser");
-                });
 
             modelBuilder.Entity("LunaLoot.Master.Domain.Address.Address", b =>
                 {
@@ -58,7 +43,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 4, 28, 7, 9, 54, 438, DateTimeKind.Utc).AddTicks(7501));
+                        .HasDefaultValue(new DateTime(2024, 5, 2, 10, 46, 20, 627, DateTimeKind.Utc).AddTicks(8670));
 
                     b.Property<string>("DeleteReason")
                         .HasColumnType("text");
@@ -100,11 +85,50 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 4, 28, 7, 9, 54, 438, DateTimeKind.Utc).AddTicks(7682));
+                        .HasDefaultValue(new DateTime(2024, 5, 2, 10, 46, 20, 627, DateTimeKind.Utc).AddTicks(8861));
 
                     b.HasKey("Id");
 
                     b.ToTable("Addresses", (string)null);
+                });
+
+            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityLogin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeleteReason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsConsumed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("IdentityLogin", (string)null);
                 });
 
             modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityUserRole", b =>
@@ -127,12 +151,14 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasDefaultValue(new Guid("da5bfd28-8d13-4687-870c-f94708dfb7ae"));
+                        .HasDefaultValue(new Guid("10569d28-17e6-4cf2-a372-8d031d1bd74e"));
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("IdentityUserId", "IdentityRoleId");
+
+                    b.HasIndex("IdentityRoleId");
 
                     b.ToTable("IdentityUserRole", (string)null);
                 });
@@ -160,15 +186,14 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
 
-                    b.Property<string>("Permissions")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Permissions")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte>("Weight")
-                        .HasColumnType("smallint");
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -211,19 +236,35 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     b.ToTable("IdentityUser", (string)null);
                 });
 
-            modelBuilder.Entity("IdentityRoleIdentityUser", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityLogin", b =>
+                {
+                    b.HasOne("LunaLoot.Master.Domain.Identity.IdentityUser", "User")
+                        .WithMany("Logins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityUserRole", b =>
                 {
                     b.HasOne("LunaLoot.Master.Domain.Identity.IdentityRole", null)
                         .WithMany()
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("IdentityRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LunaLoot.Master.Domain.Identity.IdentityUser", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("IdentityUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.IdentityUser", b =>
+                {
+                    b.Navigation("Logins");
                 });
 #pragma warning restore 612, 618
         }

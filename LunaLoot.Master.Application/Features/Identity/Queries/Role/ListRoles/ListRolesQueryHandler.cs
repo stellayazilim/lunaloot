@@ -11,8 +11,6 @@ public class ListRolesQueryHandler(
     public async Task<ErrorOr<ListRolesQueryResult>> Handle(ListRolesQuery request, CancellationToken cancellationToken)
     {
         var roles = await identityService.RoleManager.ListRolesAsync(cancellationToken);
-
-
         return new ListRolesQueryResult(
             Roles: roles
         );

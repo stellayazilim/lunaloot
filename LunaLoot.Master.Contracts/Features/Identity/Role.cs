@@ -22,16 +22,23 @@ namespace LunaLoot.Master.Contracts.Features.Identity;
         public ushort Weight { get; set; }
 
         [JsonPropertyName("permissions")] 
-        public Permissions[] Permissions { get; set; } = new Permissions[] { };
+        public Permissions[] Permissions { get; init; } = new Permissions[]{};
 
         public static explicit operator CreateRoleCommand(CreateRoleRequest request)
         {
+            Permissions permissions = Domain.Identity.Enums.Permissions.None;
+            
+            request.Permissions.ToList().ForEach(x =>
+            {
+                permissions |= x;
+            });
+                
 
             return new CreateRoleCommand(
                 Name: request.Name,
                 Description: request.Description,
                 Weight: request.Weight,
-                Permissions: request.Permissions
+                Permissions: permissions
             );
         }
     }
@@ -85,7 +92,7 @@ namespace LunaLoot.Master.Contracts.Features.Identity;
         public ushort Weight { get; set; }
 
         [JsonPropertyName("permissions")] 
-        public List<string> Permissions { get; set; } = new();
+        public Permissions Permissions { get; set; }
 
         public static implicit operator ListRoleItem(IdentityRole role)
         {
@@ -95,7 +102,7 @@ namespace LunaLoot.Master.Contracts.Features.Identity;
                 Name = role.Name,
                 Description = role.Description,
                 Weight = role.Weight,
-                Permissions = role.Permissions.ToList().ConvertAll(x => x.ToString()),
+                Permissions = role.Permissions,
             };
         }
     }

@@ -17,7 +17,7 @@ public class CreateRoleCommandHandler
             name: request.Name,
             description: request.Description,
             weight: request.Weight,
-            permissions: request.Permissions.ToList(),
+            permissions: request.Permissions,
             users: new()
             ), cancellationToken);
         return new ErrorOr<EmptyResult>();

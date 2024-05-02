@@ -24,8 +24,8 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     PostCode = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     Name = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 4, 28, 7, 9, 54, 438, DateTimeKind.Utc).AddTicks(7501)),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 4, 28, 7, 9, 54, 438, DateTimeKind.Utc).AddTicks(7682)),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 5, 2, 10, 46, 20, 627, DateTimeKind.Utc).AddTicks(8670)),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 5, 2, 10, 46, 20, 627, DateTimeKind.Utc).AddTicks(8861)),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteReason = table.Column<string>(type: "text", nullable: true)
                 },
@@ -41,8 +41,8 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     Description = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    Weight = table.Column<byte>(type: "smallint", nullable: false),
-                    Permissions = table.Column<string>(type: "text", nullable: false),
+                    Weight = table.Column<int>(type: "integer", nullable: false),
+                    Permissions = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -72,12 +72,37 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IdentityLogin",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: false),
+                    ValidUntil = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsConsumed = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeleteReason = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityLogin", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_IdentityLogin_IdentityUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "IdentityUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IdentityUserRole",
                 columns: table => new
                 {
                     IdentityUserId = table.Column<Guid>(type: "uuid", nullable: false),
                     IdentityRoleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Id = table.Column<Guid>(type: "uuid", nullable: true, defaultValue: new Guid("da5bfd28-8d13-4687-870c-f94708dfb7ae")),
+                    Id = table.Column<Guid>(type: "uuid", nullable: true, defaultValue: new Guid("10569d28-17e6-4cf2-a372-8d031d1bd74e")),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -86,36 +111,29 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IdentityUserRole", x => new { x.IdentityUserId, x.IdentityRoleId });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IdentityRoleIdentityUser",
-                columns: table => new
-                {
-                    RolesId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IdentityRoleIdentityUser", x => new { x.RolesId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_IdentityRoleIdentityUser_IdentityRole_RolesId",
-                        column: x => x.RolesId,
+                        name: "FK_IdentityUserRole_IdentityRole_IdentityRoleId",
+                        column: x => x.IdentityRoleId,
                         principalTable: "IdentityRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_IdentityRoleIdentityUser_IdentityUser_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_IdentityUserRole_IdentityUser_IdentityUserId",
+                        column: x => x.IdentityUserId,
                         principalTable: "IdentityUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_IdentityRoleIdentityUser_UsersId",
-                table: "IdentityRoleIdentityUser",
-                column: "UsersId");
+                name: "IX_IdentityLogin_UserId",
+                table: "IdentityLogin",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IdentityUserRole_IdentityRoleId",
+                table: "IdentityUserRole",
+                column: "IdentityRoleId");
         }
 
         /// <inheritdoc />
@@ -125,7 +143,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "IdentityRoleIdentityUser");
+                name: "IdentityLogin");
 
             migrationBuilder.DropTable(
                 name: "IdentityUserRole");

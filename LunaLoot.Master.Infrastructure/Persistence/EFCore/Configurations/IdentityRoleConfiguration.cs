@@ -25,20 +25,12 @@ public class IdentityRoleConfiguration : IEntityTypeConfiguration<IdentityRole>
 
         builder.Property(x => x.Permissions)
             .HasConversion(
-                permissions => string.Join(',', permissions),
-                value => ParsePermissions(value)
-            );
+                x => (int)x,
+                value => (Permissions)value);
 
         builder.HasMany(x => x.Users).WithMany(x => x.Roles);
     }
 
 
-    private List<Permissions> ParsePermissions(string value)
-    {
-
-        var permsArr = value.Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-        return permsArr.Select(x => (Permissions)Enum.Parse(typeof(Permissions), x)).ToList();
-    }
 
 }

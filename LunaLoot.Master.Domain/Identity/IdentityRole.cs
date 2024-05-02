@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using LunaLoot.Master.Domain.Common.Primitives;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 using LunaLoot.Master.Domain.Identity.Enums;
@@ -17,9 +18,9 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
 
     public UInt16 Weight { get; private init; }
     
-
-    public ICollection<Permissions> Permissions { get;  } = new List<Permissions>();
+    public Permissions Permissions { get; init; } 
     
+    [JsonIgnore]
     public ICollection<IdentityUser> Users { get; } = new List<IdentityUser>();
     
     
@@ -29,7 +30,7 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
         IdentityRoleId id, string name, string? description,
         UInt16 weight,
         List<IdentityUser> users,
-        List<Permissions> permissions) : base(id)
+        Permissions? permissions) : base(id)
     {
 
         Description = description;
@@ -38,7 +39,7 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
             throw new InvalidOperationException("Role name can not be null or whitespace");
 
         Weight = weight;
-        Permissions = permissions ?? throw new InvalidOperationException("Permissions can not be null");
+        Permissions = permissions ?? Permissions.None;
         Users = users ?? new List<IdentityUser>();
     }
 
@@ -47,7 +48,7 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
         string name,
         string? description,
         UInt16 weight,
-        List<Permissions> permissions,
+        Permissions? permissions,
         List<IdentityUser> users) => 
             new(
                 id:IdentityRoleId.CreateNew(), 
@@ -63,7 +64,7 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
         string name,
         string? description,
         UInt16 weight,
-        List<Permissions> permissions,
+        Permissions? permissions,
         List<IdentityUser> users
         )  => 
         new(

@@ -9,7 +9,7 @@ public record CreateRoleCommand(
     string Name,
     string Description,
     UInt16 Weight,
-    Permissions[] Permissions
+    Permissions Permissions
     ): IRequest<ErrorOr<EmptyResult>>;
 
 

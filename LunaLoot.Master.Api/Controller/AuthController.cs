@@ -48,6 +48,8 @@ public class AuthController(
 
     [HttpGet("")]
     [Authorize(Permissions.ReadUser)]
+    [Authorize(Permissions.EditUser)]
+    [Authorize(Permissions.EditRole)]
     public async void Protected()
     {
         

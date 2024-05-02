@@ -1,5 +1,9 @@
-﻿using LunaLoot.Master.Domain.Identity.Enums;
+﻿using System.Security.Claims;
+using System.Text.Json.Nodes;
+using LunaLoot.Master.Domain.Identity.Enums;
+using LunaLoot.Master.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace LunaLoot.Master.Contracts.Common.Identity;
 
@@ -8,10 +12,40 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionAuthorizationRequirement requirement)
     {
-        var permissionClaim = context.User.FindFirst(
-            c => c.Type == CustomClaimTypes.Permissions);
+        var roleClaim = context.User.FindAll(
+            c => c.Type == CustomClaimTypes.Roles);
 
-        if (permissionClaim == null)
+
+        var permissions = new List<Permissions>();      
+        
+      
+
+        var roles = roleClaim.Select( x => JsonConvert.DeserializeObject<JwtRoleClaimItem>(x.Value)).ToList();
+
+       
+        
+        var hasPermission = roles?.Any(r =>
+        
+           (r?.Permissions & requirement.Permissions) != 0 ? true : false );
+        
+ 
+
+   
+        if (hasPermission is true)
+        {
+            context.Succeed(requirement);
+            return Task.CompletedTask;
+        }
+
+      
+
+        return Task.CompletedTask;
+    }
+}
+
+
+/*
+      if (permissionClaim == null)
         {
             return Task.CompletedTask;
         }
@@ -30,5 +64,4 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
         }
 
         return Task.CompletedTask;
-    }
-}
+    }*/
