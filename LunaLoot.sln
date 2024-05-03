@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunaLoot.Master.Aspire.AppH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunaLoot.Master.Aspire.ServiceDefaults", "LunaLoot.Master.Aspire.ServiceDefaults\LunaLoot.Master.Aspire.ServiceDefaults.csproj", "{0860F20F-096E-48A1-9279-F3040F05F8B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunaLoot.Master.Dashboard", "LunaLoot.Master.Dashboard\LunaLoot.Master.Dashboard.csproj", "{26962149-756D-4A04-B725-002255CC608A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,7 @@ Global
 		{805EECBE-D034-42B1-9359-AFA3ACEE2CD4} = {C7CAB227-C145-4E1F-A2A3-6F49B6775B56}
 		{848F99DA-0F78-454D-B9AC-5DE3039D99DA} = {C7CAB227-C145-4E1F-A2A3-6F49B6775B56}
 		{A4945508-5A36-4577-8732-4A85602BFCBD} = {C7CAB227-C145-4E1F-A2A3-6F49B6775B56}
+		{26962149-756D-4A04-B725-002255CC608A} = {C7CAB227-C145-4E1F-A2A3-6F49B6775B56}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B334792A-EF66-415F-A063-E3CB77F464E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -74,5 +77,9 @@ Global
 		{0860F20F-096E-48A1-9279-F3040F05F8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0860F20F-096E-48A1-9279-F3040F05F8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0860F20F-096E-48A1-9279-F3040F05F8B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26962149-756D-4A04-B725-002255CC608A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26962149-756D-4A04-B725-002255CC608A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26962149-756D-4A04-B725-002255CC608A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26962149-756D-4A04-B725-002255CC608A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

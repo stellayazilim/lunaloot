@@ -1,7 +1,6 @@
 ﻿using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.ValueObjects;
 using LunaLoot.Master.Domain.Common.Primitives;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
-using LunaLoot.Master.Domain.InvoiceAggregateRoot;
 using InvoiceId = LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.ValueObjects.InvoiceId;
 
 namespace LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.Entities;

@@ -20,10 +20,11 @@ public class Address: IEntityTypeConfiguration<Domain.Aggregates.AddressAggregat
             .ValueGeneratedOnAdd()
             .HasDefaultValue(DateTime.UtcNow);
         builder.Property(u => u.UpdatedAt)
-            .ValueGeneratedOnAdd()
+            .ValueGeneratedOnUpdate()
             .HasDefaultValue(DateTime.UtcNow);
+        
         builder.Property(u => u.DeletedAt)
-            .ValueGeneratedOnUpdateSometimes();
+            .ValueGeneratedNever();
         builder.Property(a => a.Country)
             .HasMaxLength(64);
 

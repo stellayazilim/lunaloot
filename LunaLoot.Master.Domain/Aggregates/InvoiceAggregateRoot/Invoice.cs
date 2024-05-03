@@ -4,44 +4,75 @@ using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.ValueObjects;
 using LunaLoot.Master.Domain.Common.Primitives;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 
-namespace LunaLoot.Master.Domain.InvoiceAggregateRoot;
+namespace LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot;
 
 public class Invoice: AggregateRoot<InvoiceId, string>
 {
     
     #pragma warning disable CS8618
-    public Invoice() {}
+    // ReSharper disable once UnusedMember.Local
+    private Invoice() {}
     #pragma warning restore CS8618
 
-    public Invoice(
-        InvoiceId id, TransactionIdRef transactionId,
-        string receiptName, string receiptTitle,
+    private Invoice(
+        InvoiceId id, 
+        TransactionIdRef transactionId,
+        string receiptName, 
+        string receiptTitle,
         TaxAdministration receiptTaxAdministration,
-        AddressIdRef receiptAddressRef,string issuerName,
-        string issuerTitle, AddressIdRef issuerAddressRef,
+        AddressIdRef receiptAddressRef,
+        string issuerName,
+        string issuerTitle, 
+        AddressIdRef issuerAddressRef,
         TaxAdministration issuerTaxAdministration,
-        InvoiceType? invoiceType, List<InvoiceItem>? invoiceItems) : base(id)
+        InvoiceType? invoiceType, 
+        List<InvoiceItem>? invoiceItems) : base(id)
     {
         TransactionId = transactionId;
-        
         ReceiptName = receiptName;
         ReceiptTitle = receiptTitle;
         ReceiptAddressRef = receiptAddressRef;
         ReceiptTaxAdministration = receiptTaxAdministration;
-
         IssuerName = issuerName;
         IssuerTitle = issuerTitle;
         IssuerAddressRef = issuerAddressRef;
         IssuerTaxAdministration = issuerTaxAdministration;
-
         InvoiceType = invoiceType ?? InvoiceType.EArsiv;
-        _invoiceItems = invoiceItems ?? [];
+        InvoiceItems = invoiceItems ?? [];
 
     }
-    
-    public required TransactionIdRef TransactionId { get; init; }
-    public required string ReceiptName { get; init; }
-    public required string ReceiptTitle { get; init; }
+
+    public static Invoice Create( 
+        InvoiceId id, 
+        TransactionIdRef transactionId,
+        string receiptName, 
+        string receiptTitle,
+        TaxAdministration receiptTaxAdministration,
+        AddressIdRef receiptAddressRef,
+        string issuerName,
+        string issuerTitle, 
+        AddressIdRef issuerAddressRef,
+        TaxAdministration issuerTaxAdministration,
+        InvoiceType? invoiceType, 
+        List<InvoiceItem>? invoiceItems
+        ) => new(
+            id, 
+            transactionId, 
+            receiptName, 
+            receiptTitle, 
+            receiptTaxAdministration, 
+            receiptAddressRef, 
+            issuerName, 
+            issuerTitle, 
+            issuerAddressRef, 
+            issuerTaxAdministration, 
+            invoiceType, 
+            invoiceItems
+        );
+
+    public TransactionIdRef TransactionId { get; init; }
+    public string ReceiptName { get; init; }
+    public string ReceiptTitle { get; init; }
     
     
     
@@ -50,22 +81,17 @@ public class Invoice: AggregateRoot<InvoiceId, string>
     
     
     
-    public required string IssuerName { get; init; }
-    public required string IssuerTitle { get; init; }
-    public required TaxAdministration IssuerTaxAdministration { get; init; }
-    public required AddressIdRef IssuerAddressRef { get; init; }
+    public  string IssuerName { get; init; }
+    public  string IssuerTitle { get; init; }
+    public  TaxAdministration IssuerTaxAdministration { get; init; }
+    public  AddressIdRef IssuerAddressRef { get; init; }
 
 
 
     public InvoiceType InvoiceType { get; init; }
 
 
-    // ReSharper disable once InconsistentNaming
-    private List<InvoiceItem> _invoiceItems { get; init; } = [];
-    public IReadOnlyList<InvoiceItem> InvoiceItems => _invoiceItems.AsReadOnly();
+    public List<InvoiceItem> InvoiceItems { get; init; }
 
-    public void AddInvoiceItem(InvoiceItem item)
-    {
-        _invoiceItems.Add(item);
-    }
+ 
 }
