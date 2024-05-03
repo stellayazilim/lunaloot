@@ -1,4 +1,4 @@
-﻿using LunaLoot.Master.Domain.Address;
+﻿using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot;
 using LunaLoot.Master.Domain.Identity;
 using LunaLoot.Master.Domain.Identity.Entities;
 using Microsoft.EntityFrameworkCore;

@@ -1,22 +1,19 @@
 ﻿using LunaLoot.Master.Domain.Common.Primitives;
-using LunaLoot.Master.Domain.Identity.ValueObjects;
 
 namespace LunaLoot.Master.Domain.Common.ReferenceKeys;
 
-public class IdentityRoleIdRef: ValueObject
+public class TariffIdRef: ValueObject
 {
     public Guid Value { get; private init; }
     
-    public IdentityRoleIdRef() {}
+    public TariffIdRef() {}
 
-    public IdentityRoleIdRef(Guid id)
+    public TariffIdRef(Guid id)
     {
-        Value = id;
+        Value = id; 
     }
-
     public override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Value;
-
+        throw new NotImplementedException();
     }
 }

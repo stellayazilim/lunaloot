@@ -1,22 +1,22 @@
 ﻿using LunaLoot.Master.Domain.Common.Primitives;
-using LunaLoot.Master.Domain.Identity.ValueObjects;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace LunaLoot.Master.Domain.Common.ReferenceKeys;
 
-public class IdentityRoleIdRef: ValueObject
+public class AddressIdRef: ValueObject
 {
     public Guid Value { get; private init; }
     
-    public IdentityRoleIdRef() {}
+    public AddressIdRef() {}
 
-    public IdentityRoleIdRef(Guid id)
+    public AddressIdRef(Guid id)
     {
         Value = id;
     }
-
+    
     public override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
-
     }
+
 }

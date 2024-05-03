@@ -21,12 +21,9 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
 
         var hasPermission = roles?.Any(r =>
            (r?.Permissions & requirement.Permissions) != 0 ? true : false );
-        
-        if (hasPermission is true)
-        {
-            context.Succeed(requirement);
-            return Task.CompletedTask;
-        }
+
+        if (hasPermission is not true) return Task.CompletedTask;
+        context.Succeed(requirement);
         return Task.CompletedTask;
     }
 }

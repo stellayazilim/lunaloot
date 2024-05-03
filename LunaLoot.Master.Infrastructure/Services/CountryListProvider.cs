@@ -1,4 +1,5 @@
-﻿using LunaLoot.Master.Domain.Address.ValueObjects;
+﻿using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot.ValueObjects;
+
 // ReSharper disable StringLiteralTypo
 
 namespace LunaLoot.Master.Infrastructure.Services;

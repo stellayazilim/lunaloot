@@ -14,7 +14,8 @@ public class RegisterUserCommandHandler(
     public async Task<ErrorOr<EmptyResult>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
 
-        var user = IdentityUser.CreateNew(
+        var user = IdentityUser.Create(
+            IdentityUserId.CreateNew(), 
             request.Email,
             request.PhoneNumber,
             PasswordHash.GenerateHashedPassword(request.Password),

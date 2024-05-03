@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Aggregates\ProductAggregateRoot\Entities\" />
       <Folder Include="Common\Constants\" />
     </ItemGroup>
 

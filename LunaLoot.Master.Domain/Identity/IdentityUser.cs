@@ -2,6 +2,7 @@
 using LunaLoot.Master.Domain.Common.Primitives;
 using LunaLoot.Master.Domain.Identity.Entities;
 using LunaLoot.Master.Domain.Identity.ValueObjects;
+// ReSharper disable FieldCanBeMadeReadOnly.Local
 
 
 namespace LunaLoot.Master.Domain.Identity;
@@ -70,19 +71,14 @@ public sealed class IdentityUser: AggregateRoot<IdentityUserId, Guid>
 
 
     
-    public static IdentityUser Parse(
+
+    
+    public static IdentityUser Create(
         IdentityUserId id,
         string email,
         string phoneNumber,
         PasswordHash password,
         List<IdentityRole> roles) => new(id, email, phoneNumber, password, roles);
-    
-    public static IdentityUser CreateNew(
-        
-        string email,
-        string phoneNumber,
-        PasswordHash password,
-        List<IdentityRole> roles) => new(IdentityUserId.CreateNew(), email, phoneNumber, password, roles);
 
     public static IdentityUser Empty(IdentityUserId id) => new(id);
 
