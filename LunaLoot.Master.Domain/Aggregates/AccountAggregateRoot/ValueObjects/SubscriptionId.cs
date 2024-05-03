@@ -8,15 +8,14 @@ public class SubscriptionId: ValueObject
     public Guid Value { get; private init; }
     
     
-    private SubscriptionId() {}
+    public SubscriptionId() {}
 
-    private SubscriptionId(Guid value)
+    public SubscriptionId(Guid value)
     {
         Value = value;
     }
 
-    public static SubscriptionId CreateNew() => new(Guid.NewGuid());
-    public static SubscriptionId Parse(Guid id) => new(id);
+
     
     public override IEnumerable<object> GetEqualityComponents()
     {

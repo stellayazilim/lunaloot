@@ -23,19 +23,9 @@ public class Account: IEntityTypeConfiguration<Domain.Aggregates.AccountAggregat
         builder.Property(x => x.AccountUserRef)
             .HasConversion(x => x.Value, value => new IdentityUserIdRef(value))
             .IsRequired();
-        
-        
-        builder.Property(x => x.Subscriptions)
-            .HasConversion(
-                x => string.Join(',', x.Select( x => x.Value)),
-                value => 
-                    value.Split(
-                        ',', 
-                         StringSplitOptions.RemoveEmptyEntries
-                        ).ToList().ConvertAll(
-                        x => new SubscriptionIdRef(Guid.Parse(x))
-                    )
-                );
+
+
+        builder.HasMany(x => x.Subscriptions).WithOne(x => x.Account).HasForeignKey(x => x.AccountId);
         
         builder.Property(x => x.Addresses)
             .HasConversion(

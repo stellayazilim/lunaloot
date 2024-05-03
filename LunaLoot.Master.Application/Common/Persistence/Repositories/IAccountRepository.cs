@@ -1,5 +1,4 @@
-﻿using LunaLoot.Master.Domain.AccountAggregateRoot;
-using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot;
+﻿using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot;
 using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.ValueObjects;
 
 namespace LunaLoot.Master.Application.Common.Persistence.Repositories;

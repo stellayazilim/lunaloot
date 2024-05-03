@@ -1,7 +1,9 @@
-﻿using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.ValueObjects;
+﻿using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.Entities;
+using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.ValueObjects;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using InvoiceId = LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.ValueObjects.InvoiceId;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.InvoiceConfiguration;
@@ -46,7 +48,11 @@ public class Invoice: IEntityTypeConfiguration<Domain.InvoiceAggregateRoot.Invoi
                 x => SerializeTaxAdministration(x),
                 x => ParseTaxOffice(x));
 
-        builder.HasMany(x => x.InvoiceItems).WithOne(x => x.Invoice).HasForeignKey(x => x.InvoiceId);
+        builder.Property(x => x.InvoiceItems)
+            .HasConversion(
+                x => JsonConvert.SerializeObject(x),
+                value => JsonConvert.DeserializeObject<List<InvoiceItem>>(value) ?? new ()
+            );
 
     }
 

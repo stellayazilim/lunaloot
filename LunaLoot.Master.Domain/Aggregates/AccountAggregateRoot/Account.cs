@@ -1,4 +1,5 @@
-﻿using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.ValueObjects;
+﻿using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.Entities;
+using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.ValueObjects;
 using LunaLoot.Master.Domain.Common.Primitives;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 
@@ -8,6 +9,8 @@ namespace LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot;
 
 public class Account: AggregateRoot<AccountId, Guid>
 {
+
+    #region Constructors
     #pragma warning disable CS8618 
     private Account() { }
     #pragma warning restore CS8618
@@ -16,13 +19,24 @@ public class Account: AggregateRoot<AccountId, Guid>
         AccountId id,
         IdentityUserIdRef accountUserId,
         List<AddressIdRef> addresses,
-        List<SubscriptionIdRef> subscriptions) : base(id)
+        List<Subscription> subscriptions) : base(id)
     {
         AccountUserRef = accountUserId;
         _addresses = addresses;
         _subscriptions = subscriptions;
     }
+    #endregion
+    
+    #region Static factory
+    public static Account Create(
+        AccountId id,
+        IdentityUserIdRef accountUserId,
+        List<AddressIdRef> addresses,
+        List<Subscription> subscriptions) => new(
+        id, accountUserId,addresses, subscriptions
+    );
 
+    #endregion
 
     #region Addresses
         private readonly List<AddressIdRef> _addresses  = new ();
@@ -34,21 +48,17 @@ public class Account: AggregateRoot<AccountId, Guid>
     #endregion
 
     #region Subscriptions
-        private readonly List<SubscriptionIdRef> _subscriptions = new();
-        public IReadOnlyList<SubscriptionIdRef> Subscriptions => _subscriptions.AsReadOnly();
-        public void AddSubscription(SubscriptionIdRef subscription)
+        private readonly List<Subscription> _subscriptions = new();
+        public IReadOnlyList<Subscription> Subscriptions => _subscriptions.AsReadOnly();
+        public void AddSubscription(Subscription subscription)
         {
             _subscriptions.Add(subscription);
         }
 
-        public void RemoveSubscription(SubscriptionIdRef subscription)
+        public void RemoveSubscription(Subscription subscription)
         {
             throw new NotImplementedException();
         }
     #endregion
-    
-
-
-    
     public IdentityUserIdRef AccountUserRef { get; init; }
 }

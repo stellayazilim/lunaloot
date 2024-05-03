@@ -3,6 +3,7 @@ using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot;
 using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.Entities;
 using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot;
+using LunaLoot.Master.Domain.Aggregates.ProductAggregateRoot;
 using LunaLoot.Master.Domain.Common.Interfaces;
 using LunaLoot.Master.Domain.Identity.Entities;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.InvoiceConfiguration;
@@ -34,6 +35,8 @@ public class LunaLootMasterDbContext(
     public DbSet<Account> Accounts => Set<Account>();
 
     public DbSet<Invoice> Invoices => Set<Invoice>();
+
+    public DbSet<Product> Products => Set<Product>();
 
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
 
