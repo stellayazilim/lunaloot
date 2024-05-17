@@ -1,6 +1,4 @@
-﻿
-
-using ErrorOr;
+﻿using ErrorOr;
 using LunaLoot.Master.Application.Common.Interfaces;
 using LunaLoot.Master.Application.Common.Models;
 using LunaLoot.Master.Application.Common.Persistence;
@@ -17,9 +15,8 @@ namespace LunaLoot.Master.Infrastructure.Identity.Services;
 public class IdentityManager(
     ITokenGenerator tokenGenerator,
     IDateTimeProvider dateTimeProvider,
-    IUnitOfWork unitOfWork): IIdentityManager
+    IUnitOfWork unitOfWork) : IIdentityManager
 {
-
     private IUserRepository UserRepository => unitOfWork.UserRepository;
 
     public async Task<ErrorOr<IdentityUser>> GetByEmailAsync(string email, CancellationToken? cancellationToken = null)
@@ -27,8 +24,9 @@ public class IdentityManager(
         return await UserRepository.GetByEmailAsync(email, cancellationToken);
     }
 
-    public async Task<ErrorOr<LoginResult>> LoginWithCredentialsAsync(IdentityUser user, CancellationToken? cancellationToken = null)
-    { 
+    public async Task<ErrorOr<LoginResult>> LoginWithCredentialsAsync(IdentityUser user,
+        CancellationToken? cancellationToken = null)
+    {
         var refreshToken = shortid.ShortId.Generate();
 
         var login = IdentityLogin.CreateNew(
@@ -39,15 +37,14 @@ public class IdentityManager(
         );
 
         user.AddLogin(login);
-        
+
         await UserRepository.AddAsync(user, cancellationToken ?? CancellationToken.None);
-        
+
         var loginResult = new LoginResult(
             Tokens: new LoginResultTokens(
                 AccessToken: tokenGenerator.GenerateToken(user),
                 RefreshToken: refreshToken
             ),
-            
             User: user
         );
 
@@ -61,16 +58,16 @@ public class IdentityManager(
 
     public Task<ErrorOr<EmptyResult>> RegisterAsync(IdentityUser user, CancellationToken? cancellationToken)
     {
-        return  UserRepository.AddAsync(user, cancellationToken ?? CancellationToken.None);
+        return UserRepository.AddAsync(user, cancellationToken ?? CancellationToken.None);
     }
 
     public Task<ErrorOr<EmptyResult>> ChangePasswordAsync(
-        IdentityUser user, 
-        PasswordHash passwordHash, 
+        IdentityUser user,
+        PasswordHash passwordHash,
         CancellationToken? cancellationToken)
     {
         user.Password = passwordHash;
-        return Task.FromResult( UserRepository.Update(user));
+        return Task.FromResult(UserRepository.Update(user));
     }
 
     public ErrorOr<Task> ChangeEmailAsync(IdentityUser user, string email, CancellationToken? cancellationToken)
@@ -79,13 +76,15 @@ public class IdentityManager(
         return Task.FromResult(UserRepository.Update(user));
     }
 
-    public async Task<ErrorOr<EmptyResult>> JoinUserToRoleAsync(IdentityUser user, IdentityRole role, CancellationToken? cancellationToken)
+    public async Task<ErrorOr<EmptyResult>> JoinUserToRoleAsync(IdentityUser user, IdentityRole role,
+        CancellationToken? cancellationToken)
     {
         user.AddRole(role);
-        return await Task.FromResult(UserRepository.Update(user)); 
+        return await Task.FromResult(UserRepository.Update(user));
     }
 
-    public ErrorOr<Task> LeaveRolesToUserAsync(IdentityUser user, IdentityRole[] roles, CancellationToken? cancellationToken)
+    public ErrorOr<Task> LeaveRolesToUserAsync(IdentityUser user, IdentityRole[] roles,
+        CancellationToken? cancellationToken)
     {
         throw new NotImplementedException();
     }
