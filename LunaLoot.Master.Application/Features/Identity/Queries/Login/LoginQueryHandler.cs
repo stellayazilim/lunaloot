@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace LunaLoot.Master.Application.Features.Identity.Queries.Login;
 
-public class LoginQueryHandler(
+public sealed class LoginQueryHandler(
     IIdentityManager identityManager,
     IUnitOfWork unitOfWork,
     ILogger<LoginQueryHandler> logger): IRequestHandler<LoginQuery, ErrorOr<LoginQueryResult>>

@@ -1,7 +1,5 @@
-using System.IdentityModel.Tokens.Jwt;
 using LunaLoot.Master.Api;
 using LunaLoot.Master.Application;
-using LunaLoot.Master.Aspire.ServiceDefaults;
 using LunaLoot.Master.Contracts.Common.Identity;
 using LunaLoot.Master.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +38,8 @@ var app = builder.Build();
     
     app.UseAntiforgery();
     app.UseHttpsRedirection();
+
+    
     app.Run();
     
 }
