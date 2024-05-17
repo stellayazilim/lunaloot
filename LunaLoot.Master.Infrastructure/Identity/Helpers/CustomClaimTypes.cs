@@ -2,9 +2,6 @@
 
 public class CustomClaimTypes
 {
-   public static string RoleClaim = "Role.Name";
-   public static string RolePermissions = "Role.Permissions";
- 
-   
-   
+    public static string RoleClaim = "Role.Name";
+    public static string RolePermissions = "Role.Permissions";
 }

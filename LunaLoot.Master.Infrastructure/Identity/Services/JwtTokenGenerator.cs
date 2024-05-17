@@ -14,16 +14,13 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace LunaLoot.Master.Infrastructure.Identity.Services;
 
-
 public record JwtRoleClaimItem(
     Guid Id,
     string Name,
     string? Description,
     ushort Weight,
     Permissions Permissions
-    );
-
-
+);
 
 public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtSettings) : ITokenGenerator
 {
@@ -38,8 +35,8 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtS
         );
 
 
-   
-        Claim[] claims = [
+        Claim[] claims =
+        [
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.UniqueName, user.Email.ToString()),
@@ -56,9 +53,7 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtS
                 new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-
                 }), JsonClaimValueTypes.JsonArray)
-           
         ];
 
         var securityToken = new JwtSecurityToken(

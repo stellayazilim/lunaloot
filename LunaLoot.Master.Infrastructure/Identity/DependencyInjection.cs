@@ -23,7 +23,7 @@ public static class DependencyInjection
 
         services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IIdentityManager, IdentityManager>();
-        
+
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
             {
@@ -38,6 +38,5 @@ public static class DependencyInjection
             });
 
         return services;
-        
     }
 }

@@ -4,7 +4,6 @@ using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Application.Common.Services;
 using LunaLoot.Master.Application.Features.Identity.Interfaces;
 using LunaLoot.Master.Infrastructure.Identity;
-using LunaLoot.Master.Infrastructure.Identity.Services;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
 using LunaLoot.Master.Infrastructure.Services;
@@ -30,7 +29,6 @@ public static class DependencyInjection
     private static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
         services.AddDbContext<LunaLootMasterDbContext>(options =>
             {
@@ -40,7 +38,5 @@ public static class DependencyInjection
             });
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<PublishDomainEventInterceptor>();
-   
-
     }
 }
