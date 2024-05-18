@@ -5,14 +5,11 @@ using LunaLoot.Master.Domain.Aggregates.AccountAggregate;
 using LunaLoot.Master.Domain.Aggregates.AccountAggregate.Entities;
 using LunaLoot.Master.Domain.Aggregates.AddressAggregate;
 using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate;
-using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate;
 using LunaLoot.Master.Domain.Aggregates.ProductAggregate;
-using LunaLoot.Master.Domain.Aggregates.ProductAggregateRoot;
 using LunaLoot.Master.Domain.Common.Interfaces;
 using LunaLoot.Master.Domain.Identity.Entities;
 using LunaLoot.Master.Domain.Identity.Enums;
 using LunaLoot.Master.Domain.Identity.ValueObjects;
-using LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.InvoiceConfiguration;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using IdentityRole = LunaLoot.Master.Domain.Identity.IdentityRole;
@@ -37,7 +34,6 @@ public class LunaLootMasterDbContext(
 
     public DbSet<Address> Addresses => Set<Address>();
 
-
     public DbSet<Account> Accounts => Set<Account>();
 
     public DbSet<Invoice> Invoices => Set<Invoice>();
@@ -45,7 +41,6 @@ public class LunaLootMasterDbContext(
     public DbSet<Product> Products => Set<Product>();
 
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -113,6 +108,5 @@ public class LunaLootMasterDbContext(
             .AddInterceptors(publishDomainEventInterceptor);
         base.OnConfiguring(optionsBuilder);
     }
-
 
 }
