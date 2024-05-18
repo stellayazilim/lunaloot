@@ -13,5 +13,8 @@ public static partial class Errors
 
         public static Error InvalidCredentials
             => Error.Validation(code: "Identity.InvalidCredentials", description: "Provided credentials are invalid");
+
+        public static Error RoleTenantDoesNotExistError
+            => Error.NotFound(code: "Itentity.RoleDoesNotExist", description: "Role \"Tenant\" does not exist");
     }
 }

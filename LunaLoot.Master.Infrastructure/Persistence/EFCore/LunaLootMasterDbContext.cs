@@ -1,12 +1,17 @@
 using System.Reflection;
+using EntityFramework.Exceptions.PostgreSQL;
 using LunaLoot.Master.Application.Common.Persistence;
-using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot;
-using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.Entities;
-using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot;
-using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot;
+using LunaLoot.Master.Domain.Aggregates.AccountAggregate;
+using LunaLoot.Master.Domain.Aggregates.AccountAggregate.Entities;
+using LunaLoot.Master.Domain.Aggregates.AddressAggregate;
+using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate;
+using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate;
+using LunaLoot.Master.Domain.Aggregates.ProductAggregate;
 using LunaLoot.Master.Domain.Aggregates.ProductAggregateRoot;
 using LunaLoot.Master.Domain.Common.Interfaces;
 using LunaLoot.Master.Domain.Identity.Entities;
+using LunaLoot.Master.Domain.Identity.Enums;
+using LunaLoot.Master.Domain.Identity.ValueObjects;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.InvoiceConfiguration;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -44,9 +49,59 @@ public class LunaLootMasterDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        var administratorRole = IdentityRole.CreateNew(
+            name: "Administrator",
+            description: "Administrator user of application",
+            weight: 999,
+            permissions: Permissions.All,
+            null
+        );
+
+        var tenantRole = IdentityRole.CreateNew(
+            name: "Tenant",
+            description: "Tanants of the application",
+            weight: 1,
+            permissions: Permissions.None,
+            null);
+        
+        
+        var anonymousRole = IdentityRole.CreateNew(
+            name: "anonymous",
+            description: "Anonymous user of application",
+            weight: 0,
+            permissions: Permissions.None,
+            null
+        );
+
+        var administratorUser = IdentityUser.Create(
+            IdentityUserId.CreateNew(),
+            "administrator@master.lunaloot",
+            "12345678910",
+            PasswordHash.GenerateHashedPassword("administrator"),
+            null
+        );
+
+        var administratorUserRole =
+            new IdentityUserRole(IdentityUserRoleId.CreateNew(), administratorUser.Id, administratorRole.Id);
+        
         modelBuilder
             .Ignore<List<IDomainEvent>>()
             .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+
+        modelBuilder.Entity<IdentityRole>().HasData(
+            data: [ administratorRole, tenantRole, anonymousRole ]
+        );
+
+        modelBuilder.Entity<IdentityUser>().HasData(
+            data:  [administratorUser]
+        );
+
+
+        modelBuilder.Entity<IdentityUserRole>().HasData(
+            data: administratorUserRole
+        );
         base.OnModelCreating(modelBuilder);
     }
 
@@ -54,6 +109,7 @@ public class LunaLootMasterDbContext(
     {
 
         optionsBuilder
+            .UseExceptionProcessor()
             .AddInterceptors(publishDomainEventInterceptor);
         base.OnConfiguring(optionsBuilder);
     }

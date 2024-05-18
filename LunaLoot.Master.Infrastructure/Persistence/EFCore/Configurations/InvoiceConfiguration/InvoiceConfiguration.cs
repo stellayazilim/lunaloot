@@ -1,5 +1,6 @@
-﻿using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.Entities;
-using LunaLoot.Master.Domain.Aggregates.InvoiceAggregateRoot.ValueObjects;
+﻿using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate;
+using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate.Entities;
+using LunaLoot.Master.Domain.Aggregates.InvoiceAggregate.ValueObjects;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -7,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.InvoiceConfiguration;
 
-public class InvoiceConfiguration: IEntityTypeConfiguration<Domain.Aggregates.InvoiceAggregateRoot.Invoice>
+public class InvoiceConfiguration: IEntityTypeConfiguration<Invoice>
 {
-    public void Configure(EntityTypeBuilder<Domain.Aggregates.InvoiceAggregateRoot.Invoice> builder)
+    public void Configure(EntityTypeBuilder<Invoice> builder)
     {
-        builder.ToTable($"{nameof(Domain.Aggregates.InvoiceAggregateRoot.Invoice)}s");
+        builder.ToTable($"{nameof(Invoice)}s");
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)

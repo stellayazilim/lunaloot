@@ -20,7 +20,6 @@ public class IdentityRole: AggregateRoot<IdentityRoleId, Guid>
     
     public Permissions Permissions { get; set;  } 
     
-    [JsonIgnore]
     public ICollection<IdentityUser> Users { get; } = new List<IdentityUser>();
     
     

@@ -22,7 +22,6 @@ public class RegisterRequest
     public static explicit operator RegisterUserCommand(RegisterRequest request)
     {
         return new (
-            FullName: request.FullName,
             Email: request.Email,
             Password: request.Password,
             PhoneNumber: request.PhoneNumber

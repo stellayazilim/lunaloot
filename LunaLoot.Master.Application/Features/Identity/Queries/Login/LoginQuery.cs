@@ -15,9 +15,9 @@ public record LoginQueryResult
 {
     public IdentityUser User { get; init; }
 
-    public string AccessToken { get; init; } = string.Empty;
+    public TokenResult AccessToken { get; init; } 
 
-    public string RefreshToken { get; init; } = string.Empty;
+    public TokenResult RefreshToken { get; init; } 
 
 
     public static implicit operator LoginQueryResult(LoginResult result)
@@ -25,8 +25,8 @@ public record LoginQueryResult
         return new LoginQueryResult()
         {
             User = result.User,
-            AccessToken = result.Tokens.AccessToken,
-            RefreshToken = result.Tokens.RefreshToken
+            AccessToken = result.AccessToken,
+            RefreshToken = result.RefreshToken
         };
     }
 

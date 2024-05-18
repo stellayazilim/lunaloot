@@ -16,7 +16,7 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
     public async Task<ErrorOr<TEntity>> GetByIdAsync(TId id, CancellationToken? cancellationToken)
     {
         var record = await DbSet.FindAsync(id);
-        if (record is null) return Errors.Generic<TEntity>.DoesNotExistError();
+        if (record is null) return Domain.Common.Errors.Errors.Generic<TEntity>.DoesNotExistError();
         return record;
     }
 

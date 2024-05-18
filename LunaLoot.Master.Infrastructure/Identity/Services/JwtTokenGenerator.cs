@@ -1,8 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using LunaLoot.Master.Application.Common.Interfaces;
 using LunaLoot.Master.Application.Common.Services;
+using LunaLoot.Master.Application.Features.Identity.Interfaces;
+using LunaLoot.Master.Application.Features.Identity.Models;
 using LunaLoot.Master.Domain.Identity;
 using LunaLoot.Master.Domain.Identity.Enums;
 using LunaLoot.Master.Infrastructure.Identity.Configuration;
@@ -27,14 +30,14 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtS
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
 
-    public string GenerateToken(IdentityUser user)
+    public TokenResult GenerateToken(IdentityUser user)
     {
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
             SecurityAlgorithms.HmacSha256
         );
 
-
+        Debug.WriteLine(user.Roles.Count);
         Claim[] claims =
         [
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
@@ -56,13 +59,17 @@ public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtS
                 }), JsonClaimValueTypes.JsonArray)
         ];
 
+        var tokenExpirationTime = dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
         var securityToken = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
-            expires: dateTimeProvider.UtcNow.AddDays(1),
+            expires: tokenExpirationTime ,
             audience: _jwtSettings.Audience,
             claims: claims,
             signingCredentials: signingCredentials);
 
-        return new JwtSecurityTokenHandler().WriteToken(securityToken);
+        return new TokenResult(
+            Token: new JwtSecurityTokenHandler().WriteToken(securityToken),
+            ExpiredAt: tokenExpirationTime
+        );
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Text.Json.Serialization;
+using LunaLoot.Master.Application.Features.Identity.Models;
 using LunaLoot.Master.Application.Features.Identity.Queries.Login;
 using LunaLoot.Master.Domain.Identity;
-using Microsoft.AspNetCore.Http.HttpResults;
+using LunaLoot.Master.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Mvc;
+// ReSharper disable NullableWarningSuppressionIsUsed
 
 namespace LunaLoot.Master.Contracts.Features.Identity;
 
@@ -25,17 +27,30 @@ public record LoginRequest
     }
 };
 
+public record LoginResponseAccessToken
+{
+    
+    public string Value { get; init; } = string.Empty;
+    public DateTime ExpiresAt { get; init; }
+}
 
+public record LoginResponseRefreshToken
+{
+    public string Value { get; init; } = string.Empty;
+    
+    public DateTime ExpiresAt { get; init; }
+}
 public record LoginResponse
 {
     [JsonPropertyName("user")]
     public LoginResponseUser User { get; set; } 
     
     [JsonPropertyName("accessToken")]
-    public string AccessToken { get; set; }
-    
+    public TokenResult AccessToken { get; set; } = null!;
+
     [JsonPropertyName("refreshToken")]
-    public string RefreshToken { get; set; }
+  
+    public TokenResult RefreshToken { get; set; } = null!;
     
 
     public  IActionResult ToActionResult(LoginQueryResult result)

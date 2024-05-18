@@ -23,6 +23,9 @@ public interface IIdentityManager
         IdentityUser user, 
         string email, 
         CancellationToken? cancellationToken);
+
+    Task<ErrorOr<IdentityRole?>> GetRoleByNameAsync(string name,
+        CancellationToken? cancellationToken);
     Task<ErrorOr<EmptyResult>> JoinUserToRoleAsync(
         IdentityUser user, 
         IdentityRole role, 

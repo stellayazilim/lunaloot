@@ -1,7 +1,12 @@
-﻿using LunaLoot.Master.Application.Common.Interfaces;
+﻿using EntityFramework.Exceptions.Common;
+using ErrorOr;
+using LunaLoot.Master.Application.Common.Interfaces;
 using LunaLoot.Master.Application.Common.Persistence;
 using LunaLoot.Master.Application.Common.Persistence.Repositories;
+using LunaLoot.Master.Domain.Common.Errors;
 using LunaLoot.Master.Infrastructure.Persistence.EFCore.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore;
 
@@ -28,8 +33,22 @@ public class UnitOfWork(LunaLootMasterDbContext dbContext): IUnitOfWork
         return dbContext.SaveChanges();
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task<ErrorOr<int>> SaveChangesAsync(CancellationToken cancellationToken)
     {
-        return dbContext.SaveChangesAsync(cancellationToken);
+
+        try
+        {
+            return await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception e) 
+        {
+            var error = e switch
+            {
+                UniqueConstraintException => Errors.EfCore.DuplicateException,
+                _ => throw new InvalidOperationException()
+            };
+            return error;
+        }
+       
     }
 }

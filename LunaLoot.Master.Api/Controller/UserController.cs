@@ -2,6 +2,7 @@
 using LunaLoot.Master.Api.Common;
 using LunaLoot.Master.Application.Features.Identity.Queries.ListUsers;
 using LunaLoot.Master.Contracts.Common.Attributes;
+using LunaLoot.Master.Contracts.Common.Identity;
 using LunaLoot.Master.Contracts.Features.Users;
 using LunaLoot.Master.Domain.Identity.Enums;
 using MediatR;

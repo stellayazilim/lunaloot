@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using System.Text.Json.Nodes;
-using LunaLoot.Master.Domain.Identity.Enums;
+﻿using LunaLoot.Master.Domain.Identity.Enums;
 using LunaLoot.Master.Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
@@ -15,8 +13,6 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
         var roleClaim = context.User.FindAll(
             c => c.Type == CustomClaimTypes.Roles);
 
-        var permissions = new List<Permissions>();      
-        
         var roles = roleClaim.Select( x => JsonConvert.DeserializeObject<JwtRoleClaimItem>(x.Value)).ToList();
 
         var hasPermission = roles?.Any(r =>

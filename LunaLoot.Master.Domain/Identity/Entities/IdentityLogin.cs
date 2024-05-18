@@ -24,16 +24,11 @@ public class IdentityLogin: Entity<IdentityLoginId>
         UserId = userIdRef;
         User = user;
     }
-    
-    
     public string RefreshToken { get; set; }
     public DateTime ValidUntil { get; set; }
     public bool IsConsumed { get; set; }
-    
     public IdentityUserId UserId { get; set; }
-    
     public IdentityUser User { get; set; }
-
     public static IdentityLogin CreateNew(
         string refreshToken,
         DateTime validUntil,

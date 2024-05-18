@@ -13,6 +13,7 @@ public class IdentityUserConfiguration: IEntityTypeConfiguration<IdentityUser>
         builder.ToTable($"{nameof(IdentityUser)}s");
 
         builder.HasKey(x => x.Id);
+        builder.HasIndex(x => x.Email).IsUnique();
         builder.Property(x => x.Id)
             .ValueGeneratedNever()
             .HasConversion(

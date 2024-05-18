@@ -1,5 +1,5 @@
-﻿
-using LunaLoot.Master.Domain.Identity;
+﻿using LunaLoot.Master.Domain.Identity;
+using LunaLoot.Master.Domain.Identity.Entities;
 
 namespace LunaLoot.Master.Application.Features.Identity.Models;
 
@@ -10,12 +10,9 @@ namespace LunaLoot.Master.Application.Features.Identity.Models;
 /// </summary>
 public record LoginResult(
     IdentityUser User,
-    LoginResultTokens Tokens
+    IdentityLogin Login,
+    TokenResult AccessToken,
+    TokenResult RefreshToken
 );
 
-/// <summary>
-/// The login token model
-/// </summary>
-public record LoginResultTokens(
-    string AccessToken,
-    string RefreshToken);
+

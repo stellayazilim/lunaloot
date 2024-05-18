@@ -8,8 +8,12 @@ public class IdentityUserRole: Entity<IdentityUserRoleId>
 {
 
     public IdentityUserRole() { }
-    
-    public IdentityUserRole(IdentityUserRoleId id ): base(id) { }
+
+    public IdentityUserRole(IdentityUserRoleId id, IdentityUserId userId, IdentityRoleId roleId) : base(id)
+    {
+        IdentityUserId = userId;
+        IdentityRoleId = roleId;
+    }
     
     public IdentityUserId IdentityUserId { get; set; }
     

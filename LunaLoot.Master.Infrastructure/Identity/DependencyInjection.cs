@@ -15,12 +15,16 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = new JwtSettings();
-        configuration.Bind(JwtSettings.SectionName, settings);
-        services.AddSingleton(Options.Create(settings));
+        var opaqueSettings = new OpaqueSettings();
+        configuration.Bind(OpaqueSettings.SectionName, opaqueSettings);
+        services.AddSingleton(Options.Create(opaqueSettings));
+        
+        var jwtSettings = new JwtSettings();
+        configuration.Bind(JwtSettings.SectionName, jwtSettings);
+        services.AddSingleton(Options.Create(jwtSettings));
 
         // inject
-
+        services.AddSingleton<IPermissionProvider, PermissionProvider>();
         services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IIdentityManager, IdentityManager>();
 
@@ -31,10 +35,10 @@ public static class DependencyInjection
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = settings.Issuer,
-                ValidAudience = settings.Audience,
+                ValidIssuer = jwtSettings.Issuer,
+                ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(settings.Secret)),
+                    Encoding.UTF8.GetBytes(jwtSettings.Secret)),
             });
 
         return services;

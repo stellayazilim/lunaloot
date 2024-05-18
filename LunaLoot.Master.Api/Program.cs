@@ -1,8 +1,11 @@
 using LunaLoot.Master.Api;
+using LunaLoot.Master.Api.Services;
 using LunaLoot.Master.Application;
+using LunaLoot.Master.Application.Common.Interfaces;
 using LunaLoot.Master.Contracts.Common.Identity;
 using LunaLoot.Master.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -17,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
     builder.Services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
+
 
 }
 

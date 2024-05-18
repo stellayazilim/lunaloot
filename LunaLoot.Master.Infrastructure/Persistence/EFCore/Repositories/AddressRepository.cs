@@ -1,6 +1,6 @@
 ﻿using LunaLoot.Master.Application.Common.Persistence.Repositories;
-using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot;
-using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot.ValueObjects;
+using LunaLoot.Master.Domain.Aggregates.AddressAggregate;
+using LunaLoot.Master.Domain.Aggregates.AddressAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Repositories;

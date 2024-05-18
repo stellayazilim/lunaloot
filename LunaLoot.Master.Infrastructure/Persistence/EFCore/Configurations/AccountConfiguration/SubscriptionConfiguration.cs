@@ -1,5 +1,5 @@
-﻿using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.Entities;
-using LunaLoot.Master.Domain.Aggregates.AccountAggregateRoot.ValueObjects;
+﻿using LunaLoot.Master.Domain.Aggregates.AccountAggregate.Entities;
+using LunaLoot.Master.Domain.Aggregates.AccountAggregate.ValueObjects;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

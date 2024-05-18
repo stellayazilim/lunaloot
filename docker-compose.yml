@@ -1,0 +1,24 @@
+﻿x-logging: &logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+    environment:
+      POSTGRES_DB: LunaLootMaster
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - type: tmpfs
+        target: /var/lib/postgresql/data
+        tmpfs:
+          size: 100000000
+    logging: *logging
+    ports:
+      - 5432:5432

@@ -8,7 +8,7 @@ namespace LunaLoot.Master.Domain.Identity.ValueObjects;
 
 public class PasswordHash: ValueObject, IPasswordHasher
 {
-    private const int SaltSize = 128 / 8;
+    private const int SaltSize =  8;
     private string Salt => BCryptHelper.GenerateSalt(SaltSize);
     
     public string Value { get; protected set; }

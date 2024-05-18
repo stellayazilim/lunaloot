@@ -5,6 +5,7 @@ using LunaLoot.Master.Application.Features.Identity.Commands.CreateRole;
 using LunaLoot.Master.Application.Features.Identity.Queries.Role.ListRoles;
 using LunaLoot.Master.Contracts.Common.Attributes;
 using LunaLoot.Master.Contracts.Common.General;
+using LunaLoot.Master.Contracts.Common.Identity;
 using LunaLoot.Master.Contracts.Features.Identity;
 using LunaLoot.Master.Domain.Identity.Enums;
 using MediatR;

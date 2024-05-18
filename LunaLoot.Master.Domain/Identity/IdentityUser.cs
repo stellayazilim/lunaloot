@@ -2,7 +2,6 @@
 using LunaLoot.Master.Domain.Common.Primitives;
 using LunaLoot.Master.Domain.Identity.Entities;
 using LunaLoot.Master.Domain.Identity.ValueObjects;
-// ReSharper disable FieldCanBeMadeReadOnly.Local
 
 
 namespace LunaLoot.Master.Domain.Identity;
@@ -65,12 +64,6 @@ public sealed class IdentityUser: AggregateRoot<IdentityUserId, Guid>
     public IdentityUser(IdentityUserId id): base(id){}
     public IdentityUser() {}
     #pragma warning restore CS8618
-
-
-
-
-
-    
 
     
     public static IdentityUser Create(

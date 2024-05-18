@@ -1,14 +1,14 @@
-﻿using LunaLoot.Master.Domain.Aggregates.AddressAggregateRoot.ValueObjects;
+﻿using LunaLoot.Master.Domain.Aggregates.AddressAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.AddressConfiguration;
 
-public class Address: IEntityTypeConfiguration<Domain.Aggregates.AddressAggregateRoot.Address>
+public class Address: IEntityTypeConfiguration<Domain.Aggregates.AddressAggregate.Address>
 {
-    public void Configure(EntityTypeBuilder<Domain.Aggregates.AddressAggregateRoot.Address> builder)
+    public void Configure(EntityTypeBuilder<Domain.Aggregates.AddressAggregate.Address> builder)
     {
-        builder.ToTable($"{nameof(Domain.Aggregates.AddressAggregateRoot.Address)}es");
+        builder.ToTable($"{nameof(Domain.Aggregates.AddressAggregate.Address)}es");
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Id)
             .ValueGeneratedNever()

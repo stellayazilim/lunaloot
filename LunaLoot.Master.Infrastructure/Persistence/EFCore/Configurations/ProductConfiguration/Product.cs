@@ -1,4 +1,4 @@
-﻿using LunaLoot.Master.Domain.Aggregates.ProductAggregateRoot.Enum;
+﻿using LunaLoot.Master.Domain.Aggregates.ProductAggregate.Enum;
 using LunaLoot.Master.Domain.Aggregates.ProductAggregateRoot.ValueObjects;
 using LunaLoot.Master.Domain.Common.ReferenceKeys;
 using Microsoft.EntityFrameworkCore;
@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LunaLoot.Master.Infrastructure.Persistence.EFCore.Configurations.ProductConfiguration;
 
-public class Product: IEntityTypeConfiguration<Domain.Aggregates.ProductAggregateRoot.Product>
+public class Product: IEntityTypeConfiguration<Domain.Aggregates.ProductAggregate.Product>
 {
-    public void Configure(EntityTypeBuilder<Domain.Aggregates.ProductAggregateRoot.Product> builder)
+    public void Configure(EntityTypeBuilder<Domain.Aggregates.ProductAggregate.Product> builder)
     {
-        builder.ToTable($"{nameof(Domain.Aggregates.ProductAggregateRoot.Product)}s");
+        builder.ToTable($"{nameof(Domain.Aggregates.ProductAggregate.Product)}s");
 
         builder.HasKey(x => x.Id);
 
