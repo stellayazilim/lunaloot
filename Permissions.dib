@@ -1,0 +1,17 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!csharp
+
+[Flags]
+public enum Perms {
+    None = 0,
+    One = 1,
+    Two = 2,
+    Three = 4,
+    Four = 8,
+    All = ~None
+}
+
+Console.WriteLine((int)(Perms.One | Perms.Two))
