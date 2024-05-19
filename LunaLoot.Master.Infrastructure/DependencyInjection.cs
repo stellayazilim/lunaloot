@@ -32,9 +32,7 @@ public static class DependencyInjection
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
         services.AddDbContext<LunaLootMasterDbContext>(options =>
             {
-                options.UseNpgsql(
-                    configuration.GetConnectionString("DefaultConnection")
-                   );
+                options.UseNpgsql(connectionString);
             });
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<PublishDomainEventInterceptor>();
