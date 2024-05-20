@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace LunaLoot.Tenant.Infrastructure.Identity.Services;
 
-public class ApplicationUserManater(
+public class ApplicationUserManager(
     IUserStore<ApplicationUser> store,
     IOptions<IdentityOptions> optionsAccessor,
     IPasswordHasher<ApplicationUser> passwordHasher,

@@ -7,9 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LunaLoot.Tenant.Infrastructure.Identity;
 
-public static class DependencyInjection
+public static class LunaLootTenantIdentityExtensions
 {
-    public static void AddIdentity(this IServiceCollection services)
+    public static IServiceCollection AddIdentity(this IServiceCollection services)
     {
         services.AddDataProtection();
         services
@@ -22,8 +22,10 @@ public static class DependencyInjection
             .AddUserStore<ApplicationUserStore>()
             .AddUserValidator<UserValidator<ApplicationUser>>()
             .AddUserConfirmation<DefaultUserConfirmation<ApplicationUser>>()
-            .AddUserManager<ApplicationUserManater>()
+            .AddUserManager<ApplicationUserManager>()
             .AddEntityFrameworkStores<LunaLootTenantDbContext>()
             .AddDefaultTokenProviders();
+
+        return services;
     }
 }
