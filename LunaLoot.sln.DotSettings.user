@@ -5,6 +5,7 @@
   &lt;Assembly Path="C:\Users\akeri\.nuget\packages\fluentvalidation.dependencyinjectionextensions\11.5.1\lib\netstandard2.1\FluentValidation.DependencyInjectionExtensions.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\8.0.3\ref\net8.0\Microsoft.AspNetCore.HttpsPolicy.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:Boolean x:Key="/Default/Environment/Filtering/IncludeCoverageFilters/=LunaLoot_002ETenant_002EDomain_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
 	
 	<s:Boolean x:Key="/Default/Environment/Filtering/IncludeCoverageFilters/=LunaLoot_002ETenant_002EInfrastructure_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\akeri\AppData\Local\JetBrains\Rider2024.1\resharper-host\temp\Rider\vAny\CoverageData\_LunaLoot.1047466283\Snapshot\snapshot.utdcvr</s:String>

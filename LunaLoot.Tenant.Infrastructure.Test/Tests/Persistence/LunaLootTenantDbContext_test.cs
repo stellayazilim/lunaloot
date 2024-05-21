@@ -34,8 +34,8 @@ public class LunaLootTenantDbContextTest
             .Options;
 
         using var context = new LunaLootTenantDbContext(options);
-        var user = new ApplicationUser { UserName = "testuser", Email = "testuser@example.com" };
-        var role = new ApplicationRole { Name = "TestRole" };
+        var user = ApplicationUser.CreateNew(Guid.NewGuid(), "john@doe.com", "password");
+        var role = ApplicationRole.CreateNew(Guid.NewGuid(), "role",  null);
 
         // Act
         context.Users.Add(user);
@@ -47,9 +47,9 @@ public class LunaLootTenantDbContextTest
 
         // Assert
         Assert.NotNull(fetchedUser);
-        Assert.Equal("testuser", fetchedUser.UserName);
+        Assert.Equal("john@doe.com", fetchedUser.UserName);
         Assert.NotNull(fetchedRole);
-        Assert.Equal("TestRole", fetchedRole.Name);
+        Assert.Equal("role", fetchedRole.Name);
     }
 
     [Fact]

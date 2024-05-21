@@ -11,7 +11,7 @@ public class ApplicationRoleTest
     public void TestApplicationRole()
     {
         // Arrange & act
-        var role = new ApplicationRole();
+        var role = ApplicationRole.CreateNew(Guid.NewGuid(), "role", null);
         var accessor = new PrivateAccessor(role);
         var perms = (List<ApplicationPermissions>)accessor.GetField("_permissions");
         // assert
