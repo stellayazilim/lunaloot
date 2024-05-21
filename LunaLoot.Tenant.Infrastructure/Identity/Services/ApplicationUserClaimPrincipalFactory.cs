@@ -1,13 +1,21 @@
 ﻿using System.Security.Claims;
-using LunaLoot.Tenant.Infrastructure.Identity.Entities;
+using LunaLoot.Tenant.Domain.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace LunaLoot.Tenant.Infrastructure.Identity.Services;
 
-public class ApplicationUserClaimPrincipalFactory: IUserClaimsPrincipalFactory<ApplicationUser>
+public class ApplicationUserClaimPrincipalFactory(
+    UserManager<ApplicationUser> userManager,
+    IOptions<IdentityOptions> optionsAccessor)
+    : UserClaimsPrincipalFactory<ApplicationUser>(userManager, optionsAccessor)
 {
-    public Task<ClaimsPrincipal> CreateAsync(ApplicationUser user)
+
+    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
     {
-        throw new NotImplementedException();
+        
+        var identity = await base.GenerateClaimsAsync(user);
+
+        return identity;
     }
 }

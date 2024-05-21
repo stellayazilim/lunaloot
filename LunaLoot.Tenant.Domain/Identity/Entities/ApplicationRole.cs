@@ -1,7 +1,7 @@
 ﻿using LunaLoot.Tenant.Infrastructure.Identity.Enums;
 using Microsoft.AspNetCore.Identity;
 
-namespace LunaLoot.Tenant.Infrastructure.Identity.Entities;
+namespace LunaLoot.Tenant.Domain.Identity.Entities;
 
 public class ApplicationRole: IdentityRole<Guid>
 {

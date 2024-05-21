@@ -1,6 +1,7 @@
 using LunaLoot.Tenant.Api;
 using LunaLoot.Tenant.Application;
 using LunaLoot.Tenant.Infrastructure;
+using LunaLoot.Tenant.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,7 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
-
+app.AddIdentityEndpoints();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

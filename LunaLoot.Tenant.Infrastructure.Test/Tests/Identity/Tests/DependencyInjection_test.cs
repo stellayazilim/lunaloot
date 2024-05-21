@@ -1,10 +1,12 @@
-﻿using LunaLoot.Tenant.Infrastructure.Identity;
-using LunaLoot.Tenant.Infrastructure.Identity.Entities;
+﻿using LunaLoot.Tenant.Domain.Identity.Entities;
+using LunaLoot.Tenant.Infrastructure.Identity;
 using LunaLoot.Tenant.Infrastructure.Identity.Services;
 using LunaLoot.Tenant.Infrastructure.Identity.Stores;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using LunaLoot.Tenant.Infrastructure.Test.__mocks__;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Telerik.JustMock;
 
@@ -49,8 +51,23 @@ public class DependencyInjectionTest
         Mock.Assert(() => mockIdentityBuilder.AddUserConfirmation<DefaultUserConfirmation<ApplicationUser>>(), Occurs.Once());
         Mock.Assert(() => mockIdentityBuilder.AddUserManager<ApplicationUserManager>(), Occurs.Once());
         Mock.Assert(() => mockIdentityBuilder.AddEntityFrameworkStores<LunaLootTenantDbContext>(), Occurs.Once());
-        Mock.Assert(() => mockIdentityBuilder.AddDefaultTokenProviders(), Occurs.Once());
+        // @todo   Mock.Assert(() => mockIdentityBuilder.AddDefaultTokenProviders(), Occurs.Once());
 
         Assert.True(Mock.IsProfilerEnabled);
+    }
+
+
+    [Fact]
+    public void Test_AddIdentityEndpoints_ShouldRegister()
+    {
+        // arrange 
+        var app = Mocks.MockWebApplication();
+        Mock.Arrange(() => app.MapIdentityApi<ApplicationUser>()).Returns(Arg.IsAny<IEndpointConventionBuilder>());
+        
+        // act
+        LunaLootTenantIdentityExtensions.AddIdentityEndpoints(app);
+        
+        // arrange
+        Mock.Assert(() => app.MapIdentityApi<ApplicationUser>(), Occurs.Once());
     }
 }

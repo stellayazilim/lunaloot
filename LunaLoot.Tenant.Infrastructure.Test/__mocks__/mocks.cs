@@ -1,5 +1,7 @@
-﻿using LunaLoot.Tenant.Infrastructure.Identity.Entities;
+﻿using LunaLoot.Tenant.Domain.Identity.Entities;
+using LunaLoot.Tenant.Infrastructure.Identity.Services;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,4 +61,10 @@ public static partial class Mocks
 
     public static IConfigurationManager MockConfigurationManager() =>
         Mock.Create<IConfigurationManager>();
+
+    public static ApplicationUserManager MockUserManager() =>
+        Mock.Create<ApplicationUserManager>();
+
+    public static WebApplication MockWebApplication() =>
+        Mock.Create<WebApplication>();
 }

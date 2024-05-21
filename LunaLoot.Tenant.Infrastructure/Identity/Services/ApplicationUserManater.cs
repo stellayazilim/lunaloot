@@ -1,4 +1,4 @@
-﻿using LunaLoot.Tenant.Infrastructure.Identity.Entities;
+﻿using LunaLoot.Tenant.Domain.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

@@ -1,4 +1,4 @@
-﻿using LunaLoot.Tenant.Infrastructure.Identity.Entities;
+﻿using LunaLoot.Tenant.Domain.Identity.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +10,7 @@ public class LunaLootTenantDbContext(DbContextOptions<LunaLootTenantDbContext> o
  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("identity");
         base.OnModelCreating(modelBuilder);
     }
 }

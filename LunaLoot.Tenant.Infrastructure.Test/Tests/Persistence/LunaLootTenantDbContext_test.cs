@@ -1,4 +1,4 @@
-﻿using LunaLoot.Tenant.Infrastructure.Identity.Entities;
+﻿using LunaLoot.Tenant.Domain.Identity.Entities;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Telerik.JustMock;
@@ -59,7 +59,7 @@ public class LunaLootTenantDbContextTest
         var options = new DbContextOptionsBuilder<LunaLootTenantDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
+        
         using var context = new LunaLootTenantDbContext(options);
 
         // Act
