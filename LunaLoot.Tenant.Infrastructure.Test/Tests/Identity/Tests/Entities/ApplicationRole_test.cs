@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LunaLoot.Tenant.Domain.Identity.Entities;
-using LunaLoot.Tenant.Infrastructure.Identity.Enums;
+using LunaLoot.Tenant.Domain.Identity.Enums;
 using Telerik.JustMock;
 
 namespace LunaLoot.Tenant.Infrastructure.Test.Tests.Identity.Tests.Entities;

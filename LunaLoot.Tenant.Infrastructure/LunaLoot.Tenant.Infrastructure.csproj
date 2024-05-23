@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\LunaLoot.Master.Domain\LunaLoot.Master.Domain.csproj" />
       <ProjectReference Include="..\LunaLoot.Tenant.Application\LunaLoot.Tenant.Application.csproj" />
       <ProjectReference Include="..\LunaLoot.Tenant.Domain\LunaLoot.Tenant.Domain.csproj" />
     </ItemGroup>
@@ -22,6 +23,10 @@
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Persistence\EFCore\Migrations\" />
     </ItemGroup>
 
 </Project>

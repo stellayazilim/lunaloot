@@ -1,4 +1,4 @@
-﻿namespace LunaLoot.Tenant.Infrastructure.Identity.Enums;
+﻿namespace LunaLoot.Tenant.Domain.Identity.Enums;
 
 [Flags]
 public enum ApplicationPermissions

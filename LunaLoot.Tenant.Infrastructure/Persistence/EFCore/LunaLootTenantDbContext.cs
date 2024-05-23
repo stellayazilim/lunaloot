@@ -1,16 +1,27 @@
-﻿using LunaLoot.Tenant.Domain.Identity.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Reflection;
+using LunaLoot.Tenant.Domain.Aggregates.ProductAggregate;
+using LunaLoot.Tenant.Domain.Aggregates.ProductAggregate.Entities;
+using LunaLoot.Tenant.Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 
-public class LunaLootTenantDbContext(DbContextOptions<LunaLootTenantDbContext> options): IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options)
+public class LunaLootTenantDbContext
+    (DbContextOptions<LunaLootTenantDbContext> options): 
+    DbContext(options)
 {
- 
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Brand> Brands => Set<Brand>();
+    public DbSet<ProductAddIn> ProductAddIns => Set<ProductAddIn>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("identity");
+        modelBuilder.HasDefaultSchema("default");
+
+        modelBuilder
+            .Ignore<List<IDomainEvent>>()
+            .ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        
+        
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -2,24 +2,52 @@ using LunaLoot.Tenant.Api;
 using LunaLoot.Tenant.Application;
 using LunaLoot.Tenant.Infrastructure;
 using LunaLoot.Tenant.Infrastructure.Identity;
+using LunaLoot.Tenant.Infrastructure.Identity.Services;
+using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddPresentation();
+
+builder.Services.AddApplication();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "JadeWebAPI", Version = "v1" });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Bearer token must be provided",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = IdentityConstants.BearerScheme
+    });
+
+});
+
 builder.Services.AddInfrastructure(
     builder.Configuration);
-builder.Services.AddApplication();
+builder.Services.AddEndpointsApiExplorer();
 
 
 var app = builder.Build();
-
+app.UseAuthentication();
+app.UseAuthorization();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using var scope = app.Services.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<ApplicationRoleManager>();
+
+    await LunaLootTenantIdentityDbContext.Seed(userManager, roleManager);
 }
 
 app.UseHttpsRedirection();
@@ -43,6 +71,11 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+
+app.MapGet("/info", (HttpContext ctx) =>
+{
+    return ctx.User.Identity.Name;
+}).RequireAuthorization();
 app.AddIdentityEndpoints();
 app.Run();
 

@@ -12,9 +12,7 @@
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
         <PackageReference Include="FluentAssertions" Version="6.12.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.5" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
-        <PackageReference Include="System.Security.Permissions" Version="8.0.0" />
         <PackageReference Include="xunit" Version="2.5.3"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
     </ItemGroup>
@@ -24,8 +22,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LunaLoot.Tenant.Infrastructure.Identity\LunaLoot.Tenant.Infrastructure.Identity.csproj" />
-      <ProjectReference Include="..\LunaLoot.Tenant.Infrastructure\LunaLoot.Tenant.Infrastructure.csproj" />
+      <Folder Include="__mocks__\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\LunaLoot.Tenant.Domain\LunaLoot.Tenant.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using LunaLoot.Tenant.Infrastructure.Identity;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using LunaLoot.Tenant.Infrastructure.Test.__mocks__;
 using Microsoft.EntityFrameworkCore;
@@ -27,10 +28,10 @@ public class PersistenceDependencyInjectionTest
 
         // Assert
         var serviceProvider = services.BuildServiceProvider();
-        var dbContext = serviceProvider.GetService<LunaLootTenantDbContext>();
+        var dbContext = serviceProvider.GetService<LunaLootTenantIdentityDbContext>();
         
         Assert.NotNull(dbContext);
-        Assert.IsType<LunaLootTenantDbContext>(dbContext);
+        Assert.IsType<LunaLootTenantIdentityDbContext>(dbContext);
     }
 
     [Fact]

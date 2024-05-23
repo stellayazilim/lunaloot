@@ -1,39 +1,40 @@
 ﻿using LunaLoot.Tenant.Domain.Identity.Entities;
+using LunaLoot.Tenant.Infrastructure.Identity;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Telerik.JustMock;
 
 namespace LunaLoot.Tenant.Infrastructure.Test.Tests.Persistence;
 
-public class LunaLootTenantDbContextTest
+public class LunaLootTenantIdentityDbContextTest
 {
-    public class LunaLootTenantDbContextTests
+    public class LunaLootTenantIdentityDbContextTests
 {
     [Fact]
     public void CanCreateDbContext_WithInMemoryDatabase()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<LunaLootTenantDbContext>()
+        var options = new DbContextOptionsBuilder<LunaLootTenantIdentityDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
         // Act
-        using var context = new LunaLootTenantDbContext(options);
+        using var context = new LunaLootTenantIdentityDbContext(options);
 
         // Assert
         Assert.NotNull(context);
-        Assert.IsType<LunaLootTenantDbContext>(context);
+        Assert.IsType<LunaLootTenantIdentityDbContext>(context);
     }
 
     [Fact]
     public void CanPerformCRUDOperations_OnIdentityEntities()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<LunaLootTenantDbContext>()
+        var options = new DbContextOptionsBuilder<LunaLootTenantIdentityDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
 
-        using var context = new LunaLootTenantDbContext(options);
+        using var context = new LunaLootTenantIdentityDbContext(options);
         var user = ApplicationUser.CreateNew(Guid.NewGuid(), "john@doe.com", "password");
         var role = ApplicationRole.CreateNew(Guid.NewGuid(), "role",  null);
 
@@ -56,11 +57,11 @@ public class LunaLootTenantDbContextTest
     public void OnModelCreating_ShouldInvokeBaseOnModelCreating()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<LunaLootTenantDbContext>()
+        var options = new DbContextOptionsBuilder<LunaLootTenantIdentityDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
         
-        using var context = new LunaLootTenantDbContext(options);
+        using var context = new LunaLootTenantIdentityDbContext(options);
 
         // Act
         var modelBuilder = Mock.Create<ModelBuilder>(Constructor.Mocked);

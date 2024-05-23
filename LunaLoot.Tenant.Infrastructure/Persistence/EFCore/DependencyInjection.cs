@@ -13,10 +13,14 @@ public static class PersistenceDependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         Guard.Against.NullOrEmpty(connectionString, parameterName: null, message: "Connection string can not be null or empty");
         services.AddDbContext<LunaLootTenantDbContext>(options =>
-            {
-                options.UseNpgsql(connectionString);
-            });
+        {
+            options.UseNpgsql(connectionString);
+        });
 
+
+      
         return services;
     }
+
+   
 }

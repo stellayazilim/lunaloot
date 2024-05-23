@@ -1,7 +1,6 @@
 ﻿using LunaLoot.Tenant.Domain.Identity.Entities;
 using LunaLoot.Tenant.Infrastructure.Identity.Services;
 using LunaLoot.Tenant.Infrastructure.Identity.Stores;
-using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
@@ -26,13 +25,14 @@ public static class LunaLootTenantIdentityExtensions
             .AddUserValidator<UserValidator<ApplicationUser>>()
             .AddUserConfirmation<DefaultUserConfirmation<ApplicationUser>>()
             .AddUserManager<ApplicationUserManager>()
-            .AddEntityFrameworkStores<LunaLootTenantDbContext>()
+            .AddEntityFrameworkStores<LunaLootTenantIdentityDbContext>()
             .AddSignInManager<SignInManager<ApplicationUser>>()
             .AddDefaultTokenProviders();
         
         services.AddTransient<IEmailSender<ApplicationUser>, ApplicationEmailSender>();
         services.AddAuthorization();
-        services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+        services.AddAuthentication()
+            .AddBearerToken(IdentityConstants.BearerScheme);
         return services;
     }
 

@@ -1,4 +1,5 @@
-﻿using LunaLoot.Tenant.Infrastructure.Identity.Enums;
+﻿using System.Text.Json.Serialization;
+using LunaLoot.Tenant.Domain.Identity.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace LunaLoot.Tenant.Domain.Identity.Entities;
@@ -9,7 +10,7 @@ public sealed class ApplicationRole: IdentityRole<Guid>
     // ReSharper disable once FieldCanBeMadeReadOnly.Local
     // ReSharper disable once MemberInitializerValueIgnored
     // ReSharper disable once HeapView.ObjectAllocation
-    private List<ApplicationPermissions> _permissions  = [];
+    
 
     public static ApplicationRole CreateNew(
         Guid id,
@@ -21,5 +22,7 @@ public sealed class ApplicationRole: IdentityRole<Guid>
         _permissions = perms ?? new()
     };
 
+    private List<ApplicationPermissions> _permissions  = [];
+    
     public IReadOnlyList<ApplicationPermissions> Permissions => _permissions.AsReadOnly();
 }

@@ -32,7 +32,7 @@ public class DependencyInjectionTest
         Mock.Arrange(() => mockIdentityBuilder.AddUserValidator<UserValidator<ApplicationUser>>()).Returns(mockIdentityBuilder);
         Mock.Arrange(() => mockIdentityBuilder.AddUserConfirmation<DefaultUserConfirmation<ApplicationUser>>()).Returns(mockIdentityBuilder);
         Mock.Arrange(() => mockIdentityBuilder.AddUserManager<ApplicationUserManager>()).Returns(mockIdentityBuilder);
-        Mock.Arrange(() => mockIdentityBuilder.AddEntityFrameworkStores<LunaLootTenantDbContext>()).Returns(mockIdentityBuilder);
+        Mock.Arrange(() => mockIdentityBuilder.AddEntityFrameworkStores<LunaLootTenantIdentityDbContext>()).Returns(mockIdentityBuilder);
         Mock.Arrange(() => mockIdentityBuilder.AddDefaultTokenProviders()).Returns(mockIdentityBuilder);
         
         // act
@@ -50,7 +50,7 @@ public class DependencyInjectionTest
         Mock.Assert(() => mockIdentityBuilder.AddUserValidator<UserValidator<ApplicationUser>>(), Occurs.Once());
         Mock.Assert(() => mockIdentityBuilder.AddUserConfirmation<DefaultUserConfirmation<ApplicationUser>>(), Occurs.Once());
         Mock.Assert(() => mockIdentityBuilder.AddUserManager<ApplicationUserManager>(), Occurs.Once());
-        Mock.Assert(() => mockIdentityBuilder.AddEntityFrameworkStores<LunaLootTenantDbContext>(), Occurs.Once());
+        Mock.Assert(() => mockIdentityBuilder.AddEntityFrameworkStores<LunaLootTenantIdentityDbContext>(), Occurs.Once());
         // @todo   Mock.Assert(() => mockIdentityBuilder.AddDefaultTokenProviders(), Occurs.Once());
 
         Assert.True(Mock.IsProfilerEnabled);

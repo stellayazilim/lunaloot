@@ -1,4 +1,5 @@
 ﻿using LunaLoot.Tenant.Domain.Identity.Entities;
+using LunaLoot.Tenant.Infrastructure.Identity;
 using LunaLoot.Tenant.Infrastructure.Identity.Services;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using Microsoft.AspNetCore.Builder;
@@ -13,8 +14,8 @@ namespace LunaLoot.Tenant.Infrastructure.Test.__mocks__;
 
 public static partial class Mocks
 {
-    public static LunaLootTenantDbContext MockLunaLootTenantDbContext() =>
-        Mock.Create<LunaLootTenantDbContext>();
+    public static LunaLootTenantIdentityDbContext MockLunaLootTenantDbContext() =>
+        Mock.Create<LunaLootTenantIdentityDbContext>();
     public static IRoleStore<ApplicationRole> MockRoleStore() => 
         Mock.Create<IRoleStore<ApplicationRole>>();
 
