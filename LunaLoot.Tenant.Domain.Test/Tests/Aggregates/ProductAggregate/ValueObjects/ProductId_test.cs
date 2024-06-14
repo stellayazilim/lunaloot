@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using LunaLoot.Tenant.Domain.Aggregates.ProductAggregate.ValueObjects;
+using LunaLoot.Tenant.Domain.Aggregates.Product.ValueObjects;
 
 namespace LunaLoot.Tenant.Domain.Test.Tests.Aggregates.ProductAggregate.ValueObjects;
 
@@ -13,18 +13,18 @@ public class ProductIdTest
         var id = Guid.NewGuid();
         
         // act
-        var productId = new ProductId(id);
+        var productId = ProductId.Create(id);
         
         // assert
         productId.Value.Should().Be(id);
-        productId.Should().NotBe(new ProductId(Guid.NewGuid()));
+        productId.Should().NotBe(ProductId.Create(Guid.NewGuid()));
     }
 
     [Fact]
     public void Test_ProductId_ShouldCreatedWithEmptyConstructor()
     {
         // act
-        var productId = new ProductId();
+        var productId = ProductId.Create();
         
         // assert
         productId.Should().NotBeNull();
@@ -35,7 +35,7 @@ public class ProductIdTest
     {
         // Arrange
         var guid = Guid.NewGuid();
-        var productId = new ProductId(guid);
+        var productId = ProductId.Create(guid);
 
         // Act
         var components = productId.GetEqualityComponents().ToList();
@@ -50,8 +50,8 @@ public class ProductIdTest
     {
         // Arrange
         var guid = Guid.NewGuid();
-        var productId1 = new ProductId(guid);
-        var productId2 = new ProductId(guid);
+        var productId1 = ProductId.Create(guid);
+        var productId2 = ProductId.Create(guid);
 
         // Act & Assert
         Assert.True(productId1 == productId2);
@@ -63,8 +63,8 @@ public class ProductIdTest
     public void Test_ProductId_Operator_Inequality_ReturnsTrueForDifferentObjects()
     {
         // Arrange
-        var productId1 = new ProductId(Guid.NewGuid());
-        var productId2 = new ProductId(Guid.NewGuid());
+        var productId1 = ProductId.Create(Guid.NewGuid());
+        var productId2 = ProductId.Create(Guid.NewGuid());
 
         // Act & Assert
         Assert.True(productId1 != productId2);
@@ -75,8 +75,8 @@ public class ProductIdTest
     public void Test_ProductId_GetHashCode_ReturnsDifferentHashCodeForDifferentObjects()
     {
         // Arrange
-        var productId1 = new ProductId(Guid.NewGuid());
-        var productId2 = new ProductId(Guid.NewGuid());
+        var productId1 = ProductId.Create(Guid.NewGuid());
+        var productId2 = ProductId.Create(Guid.NewGuid());
 
         // Act
         var hashCode1 = productId1.GetHashCode();
@@ -93,8 +93,8 @@ public class ProductIdTest
     {
         // Arrange
         var guid = Guid.NewGuid();
-        var productId1 = new ProductId(guid);
-        var productId2 = new ProductId(guid);
+        var productId1 = ProductId.Create(guid);
+        var productId2 = ProductId.Create(guid);
 
         // Act
         var areEqual = productId1.Equals(productId2);
@@ -109,8 +109,8 @@ public class ProductIdTest
     public void Test_ProductId_Equals_ReturnsFalseForDifferentObjects()
     {
         // Arrange
-        var productId1 = new ProductId(Guid.NewGuid());
-        var productId2 = new ProductId(Guid.NewGuid());
+        var productId1 = ProductId.Create(Guid.NewGuid());
+        var productId2 = ProductId.Create(Guid.NewGuid());
 
         // Act
         var areEqual = productId1.Equals(productId2);

@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using LunaLoot.Tenant.Application.Common.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ public static class PersistenceDependencyInjection
             options.UseNpgsql(connectionString);
         });
 
-
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
       
         return services;
     }

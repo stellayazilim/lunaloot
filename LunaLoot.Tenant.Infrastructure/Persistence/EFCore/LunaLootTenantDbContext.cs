@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using LunaLoot.Tenant.Domain.Aggregates.ProductAggregate;
-using LunaLoot.Tenant.Domain.Aggregates.ProductAggregate.Entities;
+using LunaLoot.Tenant.Domain.Aggregates.Product;
+using LunaLoot.Tenant.Domain.Aggregates.Product.Entities;
 using LunaLoot.Tenant.Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +11,7 @@ public class LunaLootTenantDbContext
     DbContext(options)
 {
     public DbSet<Product> Products => Set<Product>();
-    public DbSet<Brand> Brands => Set<Brand>();
-    public DbSet<ProductAddIn> ProductAddIns => Set<ProductAddIn>();
+    public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("default");

@@ -7,6 +7,7 @@ using LunaLoot.Tenant.Infrastructure.Test.__mocks__;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Telerik.JustMock;
 
@@ -37,7 +38,7 @@ public class DependencyInjectionTest
         
         // act
         // ReSharper disable once InvokeAsExtensionMethod
-        LunaLootTenantIdentityExtensions.AddIdentity(services);
+        LunaLootTenantIdentityExtensions.AddIdentity(services, Mock.Create<IConfigurationManager>());
         
         // assert   
         Mock.Assert(() => services.AddIdentityCore<ApplicationUser>(), Occurs.Once());

@@ -2,7 +2,7 @@
 
 public class OpaqueSettings
 {
-    public const string SectionName = "Identity:RefreshToken";
+    public const string SectionName = "Product:RefreshToken";
     
     public int ExpiryInMinutes { get; init; }
 }

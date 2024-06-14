@@ -252,7 +252,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityLogin", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityLogin", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -291,7 +291,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.ToTable("IdentityLogins", (string)null);
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityUserRole", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityUserRole", b =>
                 {
                     b.Property<Guid>("IdentityUserId")
                         .HasColumnType("uuid");
@@ -333,7 +333,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.IdentityRole", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.IdentityRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -405,7 +405,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.IdentityUser", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -476,9 +476,9 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityLogin", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityLogin", b =>
                 {
-                    b.HasOne("LunaLoot.Master.Domain.Identity.IdentityUser", "User")
+                    b.HasOne("LunaLoot.Master.Domain.Product.IdentityUser", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -487,15 +487,15 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.Entities.IdentityUserRole", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityUserRole", b =>
                 {
-                    b.HasOne("LunaLoot.Master.Domain.Identity.IdentityRole", null)
+                    b.HasOne("LunaLoot.Master.Domain.Product.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("IdentityRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LunaLoot.Master.Domain.Identity.IdentityUser", null)
+                    b.HasOne("LunaLoot.Master.Domain.Product.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("IdentityUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -512,7 +512,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("Variants");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Identity.IdentityUser", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Product.IdentityUser", b =>
                 {
                     b.Navigation("Logins");
                 });

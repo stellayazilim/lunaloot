@@ -31,6 +31,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddInfrastructure(
     builder.Configuration);
+builder.Services.AddIdentity(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 
 
@@ -47,7 +48,6 @@ if (app.Environment.IsDevelopment())
     var userManager = scope.ServiceProvider.GetRequiredService<ApplicationUserManager>();
     var roleManager = scope.ServiceProvider.GetRequiredService<ApplicationRoleManager>();
 
-    await LunaLootTenantIdentityDbContext.Seed(userManager, roleManager);
 }
 
 app.UseHttpsRedirection();

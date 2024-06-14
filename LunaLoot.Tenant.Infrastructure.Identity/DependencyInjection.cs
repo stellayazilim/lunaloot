@@ -4,13 +4,15 @@ using LunaLoot.Tenant.Infrastructure.Identity.Stores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LunaLoot.Tenant.Infrastructure.Identity;
 
 public static class LunaLootTenantIdentityExtensions
 {
-    public static IServiceCollection AddIdentity(this IServiceCollection services)
+    public static IServiceCollection AddIdentity(this IServiceCollection services, IConfigurationManager configuration)
     {
       
         services.AddDataProtection();
@@ -33,6 +35,17 @@ public static class LunaLootTenantIdentityExtensions
         services.AddAuthorization();
         services.AddAuthentication()
             .AddBearerToken(IdentityConstants.BearerScheme);
+        
+        
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddDbContext<LunaLootTenantIdentityDbContext>(
+            options =>
+            {
+                options.UseNpgsql(
+                    connectionString,
+                    x => x.MigrationsHistoryTable("__EFIdentityMigrationsHistory"));
+           
+            });
         return services;
     }
 

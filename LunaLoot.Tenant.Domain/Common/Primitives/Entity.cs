@@ -7,6 +7,12 @@ namespace LunaLoot.Tenant.Domain.Common.Primitives;
 /// The entity class
 /// </summary>
 /// <seealso cref="IEquatable{Entity{TId}}"/>
+
+
+/// <summary>
+/// The entity class
+/// </summary>
+/// <seealso cref="IEquatable{Entity{TId}}"/>
 public abstract class Entity<TId>: IEquatable<Entity<TId>>, IHasDomainEvents
 {
     /// <summary>
