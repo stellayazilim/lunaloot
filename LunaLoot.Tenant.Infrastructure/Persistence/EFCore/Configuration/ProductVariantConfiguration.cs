@@ -1,6 +1,5 @@
-﻿
-using LunaLoot.Tenant.Domain.Aggregates.Product.Entities;
-using LunaLoot.Tenant.Domain.Aggregates.Product.ValueObjects;
+﻿using LunaLoot.Tenant.Domain.Aggregates.Products.Entities;
+using LunaLoot.Tenant.Domain.Aggregates.Products.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

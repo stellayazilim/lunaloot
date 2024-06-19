@@ -1,7 +1,9 @@
-﻿using LunaLoot.Tenant.Domain.Aggregates.Product;
-using LunaLoot.Tenant.Domain.Aggregates.Product.ValueObjects;
+﻿using System.Text.Json.Serialization;
+using LunaLoot.Tenant.Domain.Aggregates.Products;
+using LunaLoot.Tenant.Domain.Aggregates.Products.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 
 namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Configuration;
 
@@ -24,6 +26,11 @@ public class ProductConfiguration: IEntityTypeConfiguration<Product>
                 id => id.Value,
                 value => ProductId.Create(value));
 
+        builder.Property(x => x.Specifications)
+            .HasConversion(
+                x => JsonConvert.SerializeObject(x, Formatting.Indented),
+                value => JsonConvert.DeserializeObject<List<KeyValuePair<string, string>>>(value)!);
+        
         builder.HasMany(x => x.Variants)
             .WithOne(x => x.Product)
             .HasForeignKey(x => x.ProductId);

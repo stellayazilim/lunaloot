@@ -23,7 +23,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Product.Entities.ApplicationRole", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Products.Entities.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetRoles", "identity");
                 });
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Product.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Products.Entities.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,7 +119,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetUsers", "identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,7 +143,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetRoleClaims", "identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,7 +167,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetUserClaims", "identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
@@ -188,7 +188,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetUserLogins", "identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -203,7 +203,7 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetUserRoles", "identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserToken<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -222,51 +222,51 @@ namespace LunaLoot.Tenant.Infrastructure.Identity.Migrations
                     b.ToTable("AspNetUserTokens", "identity");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("LunaLoot.Tenant.Domain.Product.Entities.ApplicationRole", null)
+                    b.HasOne("LunaLoot.Tenant.Domain.Products.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("LunaLoot.Tenant.Domain.Product.Entities.ApplicationUser", null)
+                    b.HasOne("LunaLoot.Tenant.Domain.Products.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("LunaLoot.Tenant.Domain.Product.Entities.ApplicationUser", null)
+                    b.HasOne("LunaLoot.Tenant.Domain.Products.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("LunaLoot.Tenant.Domain.Product.Entities.ApplicationRole", null)
+                    b.HasOne("LunaLoot.Tenant.Domain.Products.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LunaLoot.Tenant.Domain.Product.Entities.ApplicationUser", null)
+                    b.HasOne("LunaLoot.Tenant.Domain.Products.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Product.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Products.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("LunaLoot.Tenant.Domain.Product.Entities.ApplicationUser", null)
+                    b.HasOne("LunaLoot.Tenant.Domain.Products.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

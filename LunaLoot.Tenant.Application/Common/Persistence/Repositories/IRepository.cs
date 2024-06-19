@@ -24,7 +24,10 @@ public interface IRepository<TEntity, in TId> where TEntity: class where TId: no
     /// Get All entities
     /// </summary>
     /// <returns></returns>
-    Task<ErrorOr<List<TEntity>>> GetAllAsync(CancellationToken? cancellationToken  = null);
+    Task<ErrorOr<PaginatedResult<TEntity>>> GetAllAsync(
+        int size,
+        int page,
+        CancellationToken? cancellationToken  = null);
     
     /// <summary>
     /// Get all entities asynchronously

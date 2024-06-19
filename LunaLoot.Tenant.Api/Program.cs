@@ -77,6 +77,7 @@ app.MapGet("/info", (HttpContext ctx) =>
     return ctx.User.Identity.Name;
 }).RequireAuthorization();
 app.AddIdentityEndpoints();
+app.MapControllers();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

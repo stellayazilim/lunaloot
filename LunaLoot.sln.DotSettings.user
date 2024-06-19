@@ -30,6 +30,13 @@
 	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/EnvironmentVariablesIndexed/=JUSTMOCK_005FINSTANCE/@EntryIndexedValue">1</s:String>
 	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/EnvironmentVariablesIndexed/=RESHARPER_005FHOST_005FVERSION/@EntryIndexRemoved">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/EnvironmentVariablesIndexed/=RESHARPER_005FHOST/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=19bef103_002D1a15_002D47dd_002Dabe8_002D6c6539034dac_0023LunaLoot_002EMaster_002EInfrastructure_002ETests/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=805eecbe_002Dd034_002D42b1_002D9359_002Dafa3acee2cd4_0023LunaLoot_002EMaster_002EApplication/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=848f99da_002D0f78_002D454d_002Db9ac_002D5de3039d99da_0023LunaLoot_002EMaster_002EDomain/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=a4945508_002D5a36_002D4577_002D8732_002D4a85602bfcbd_0023LunaLoot_002EMaster_002EInfrastructure/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=b334792a_002Def66_002D415f_002Da063_002De3cb77f464e4_0023LunaLoot_002EMaster_002EApi/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=db7ffdee_002D7d43_002D42cc_002Da16b_002D7620e9ecd97d_0023LunaLoot_002EMaster_002EContracts/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=e5ddbf1b_002D3cc2_002D411f_002Dbcf8_002Ddce5dabbbbbb_0023LunaLoot_002ETenant_002EDomain_002ETest/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Arsiv/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Fatura/@EntryIndexedValue">True</s:Boolean>
 	</wpf:ResourceDictionary>

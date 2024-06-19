@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Contracts\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\LunaLoot.Tenant.Application\LunaLoot.Tenant.Application.csproj" />
       <ProjectReference Include="..\LunaLoot.Tenant.Infrastructure.Identity\LunaLoot.Tenant.Infrastructure.Identity.csproj" />
       <ProjectReference Include="..\LunaLoot.Tenant.Infrastructure\LunaLoot.Tenant.Infrastructure.csproj" />

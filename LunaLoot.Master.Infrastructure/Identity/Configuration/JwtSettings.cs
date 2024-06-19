@@ -2,7 +2,7 @@
 
 public class JwtSettings
 {
-    public const string SectionName = "Product:AccessToken";
+    public const string SectionName = "Products:AccessToken";
     public string Secret { get; init; } = null!;
 
     public int ExpiryMinutes { get; init; }

@@ -1,5 +1,5 @@
-﻿using LunaLoot.Tenant.Domain.Aggregates.Product;
-using LunaLoot.Tenant.Domain.Aggregates.Product.ValueObjects;
+﻿using LunaLoot.Tenant.Domain.Aggregates.Products;
+using LunaLoot.Tenant.Domain.Aggregates.Products.ValueObjects;
 
 namespace LunaLoot.Tenant.Application.Common.Persistence.Repositories;
 

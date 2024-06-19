@@ -24,7 +24,37 @@ namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Product.Entities.Category", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Entities.Brand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeleteReason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands", "default");
+                });
+
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -46,7 +76,7 @@ namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Migrations
                     b.ToTable("Categorys", "default");
                 });
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Product.Entities.ProductVariant", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Entities.ProductVariant", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -81,7 +111,7 @@ namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Migrations
                     b.ToTable("ProductVariants", "default");
                 });
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Product.Product", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -108,10 +138,14 @@ namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<string>("Specifications")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.ComplexProperty<Dictionary<string, object>>("Price", "LunaLoot.Tenant.Domain.Aggregates.Product.Product.Price#Price", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Price", "LunaLoot.Tenant.Domain.Aggregates.Products.Product.Price#Price", b1 =>
                         {
                             b1.IsRequired();
 
@@ -129,39 +163,9 @@ namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Migrations
                     b.ToTable("Products", "default");
                 });
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.ProductAggregate.Entities.Brand", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Entities.ProductVariant", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DeleteReason")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Brands", "default");
-                });
-
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Product.Entities.ProductVariant", b =>
-                {
-                    b.HasOne("LunaLoot.Tenant.Domain.Aggregates.Product.Product", "Product")
+                    b.HasOne("LunaLoot.Tenant.Domain.Aggregates.Products.Product", "Product")
                         .WithMany("Variants")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -170,23 +174,23 @@ namespace LunaLoot.Tenant.Infrastructure.Persistence.EFCore.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Product.Product", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Product", b =>
                 {
-                    b.HasOne("LunaLoot.Tenant.Domain.Aggregates.ProductAggregate.Entities.Brand", "Brand")
+                    b.HasOne("LunaLoot.Tenant.Domain.Aggregates.Products.Entities.Brand", "Brand")
                         .WithMany("Products")
                         .HasForeignKey("BrandId");
 
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Product.Product", b =>
-                {
-                    b.Navigation("Variants");
-                });
-
-            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.ProductAggregate.Entities.Brand", b =>
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Entities.Brand", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("LunaLoot.Tenant.Domain.Aggregates.Products.Product", b =>
+                {
+                    b.Navigation("Variants");
                 });
 #pragma warning restore 612, 618
         }

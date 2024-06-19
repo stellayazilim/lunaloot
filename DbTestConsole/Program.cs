@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
-using LunaLoot.Tenant.Domain.Aggregates.Product;
-using LunaLoot.Tenant.Domain.Aggregates.Product.ValueObjects;
+using LunaLoot.Tenant.Domain.Aggregates.Products;
+using LunaLoot.Tenant.Domain.Aggregates.Products.ValueObjects;
 using LunaLoot.Tenant.Infrastructure.Persistence.EFCore;
 using Microsoft.EntityFrameworkCore;
 var options = new DbContextOptionsBuilder<LunaLootTenantDbContext>();
@@ -29,7 +28,7 @@ var dbContext = new LunaLootTenantDbContext(
 //     "brand_1 aciklama",
 //     null);
 //
-// var product1 = Product.Create(
+// var product1 = Products.Create(
 //         product1_id,
 //         "Urun 1",
 //         "Urun 1 aciklama",
@@ -55,7 +54,7 @@ var old_p = dbContext.Set<Product>()
 // product1.AddVariant(variant);
 //
 // dbContext.Set<Brand>().Add(brand1);
-// dbContext.Set<Product>().Add(product1);
+// dbContext.Set<Products>().Add(product1);
 // dbContext.SaveChanges();
 int t = int.Parse(Console.ReadLine());
 

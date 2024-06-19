@@ -3,12 +3,13 @@ using ErrorOr;
 using LunaLoot.Tenant.Application.Common.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace LunaLoot.Tenant.Application.Common.Behaviors;
 
 public sealed class UnitOfWorkBehavior<TRequest, TResponse>(
-    IUnitOfWork unitOfWork
-): IPipelineBehavior<TRequest, TResponse>
+    IUnitOfWork unitOfWork,
+    ILogger<UnitOfWorkBehavior<TRequest, TResponse>> logger): IPipelineBehavior<TRequest, TResponse>
     where TRequest: IRequest<TResponse>
     where TResponse: IErrorOr 
 {
@@ -33,7 +34,10 @@ public sealed class UnitOfWorkBehavior<TRequest, TResponse>(
             transactionScope.Complete();
             // ReSharper disable once HeapView.PossibleBoxingAllocation
             // @todo rid of (dynamic) casting
+            
+            logger.Log(LogLevel.Debug,"transaction");
             return changes.IsError ? (dynamic)changes.Errors : result;
+            
         }
     }
 }

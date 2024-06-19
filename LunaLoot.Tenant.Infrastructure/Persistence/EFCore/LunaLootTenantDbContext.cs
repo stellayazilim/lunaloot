@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using LunaLoot.Tenant.Domain.Aggregates.Product;
-using LunaLoot.Tenant.Domain.Aggregates.Product.Entities;
+using LunaLoot.Tenant.Domain.Aggregates.Products;
+using LunaLoot.Tenant.Domain.Aggregates.Products.Entities;
 using LunaLoot.Tenant.Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

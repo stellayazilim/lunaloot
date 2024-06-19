@@ -210,7 +210,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.ToTable("Invoices", (string)null);
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Product", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Products", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -252,7 +252,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityLogin", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.Entities.IdentityLogin", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -291,7 +291,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.ToTable("IdentityLogins", (string)null);
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityUserRole", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.Entities.IdentityUserRole", b =>
                 {
                     b.Property<Guid>("IdentityUserId")
                         .HasColumnType("uuid");
@@ -333,7 +333,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.IdentityRole", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.IdentityRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -405,7 +405,7 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.IdentityUser", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -466,9 +466,9 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Product", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Products", b =>
                 {
-                    b.HasOne("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Product", "Parent")
+                    b.HasOne("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Products", "Parent")
                         .WithMany("Variants")
                         .HasForeignKey("ParentRef1")
                         .HasPrincipalKey("ParentRef");
@@ -476,9 +476,9 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityLogin", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.Entities.IdentityLogin", b =>
                 {
-                    b.HasOne("LunaLoot.Master.Domain.Product.IdentityUser", "User")
+                    b.HasOne("LunaLoot.Master.Domain.Products.IdentityUser", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -487,15 +487,15 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.Entities.IdentityUserRole", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.Entities.IdentityUserRole", b =>
                 {
-                    b.HasOne("LunaLoot.Master.Domain.Product.IdentityRole", null)
+                    b.HasOne("LunaLoot.Master.Domain.Products.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("IdentityRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LunaLoot.Master.Domain.Product.IdentityUser", null)
+                    b.HasOne("LunaLoot.Master.Domain.Products.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("IdentityUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -507,12 +507,12 @@ namespace LunaLoot.Master.Infrastructure.Persistence.EfCore.Migrations
                     b.Navigation("Subscriptions");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Product", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Aggregates.ProductAggregate.Products", b =>
                 {
                     b.Navigation("Variants");
                 });
 
-            modelBuilder.Entity("LunaLoot.Master.Domain.Product.IdentityUser", b =>
+            modelBuilder.Entity("LunaLoot.Master.Domain.Products.IdentityUser", b =>
                 {
                     b.Navigation("Logins");
                 });

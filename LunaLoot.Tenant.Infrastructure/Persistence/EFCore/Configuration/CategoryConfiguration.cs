@@ -1,4 +1,4 @@
-﻿using LunaLoot.Tenant.Domain.Aggregates.Product.Entities;
+﻿using LunaLoot.Tenant.Domain.Aggregates.Products.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -9,7 +9,7 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
     where TEntity: class 
     where TId : notnull
 {
-
+    
     protected readonly DbSet<TEntity> DbSet = dbContext.Set<TEntity>();
     
     public async Task<ErrorOr<TEntity>> GetByIdAsync(TId id, CancellationToken? cancellationToken)
@@ -18,15 +18,27 @@ public abstract class Repository<TEntity, TId>(DbContext dbContext): IRepository
         if (record is null) return Domain.Common.Errors.Errors.Generic<TEntity>.DoesNotExistError();
         return record;
     }
-
+    
     public ErrorOr<TEntity?> GetById(TId id)
     {
         return DbSet.Find(id);
     }
 
-    public async Task<ErrorOr<List<TEntity>>> GetAllAsync(CancellationToken? cancellationToken)
+    public async Task<ErrorOr<PaginatedResult<TEntity>>> GetAllAsync(
+        int size,
+        int page,
+        CancellationToken? cancellationToken)
     {
-        return await DbSet.ToListAsync(cancellationToken ?? CancellationToken.None);
+        
+        var count = DbSet.Count();
+        var totalPage = (count / size) + 1;
+        var data = await DbSet.Skip((page - 1) * size).Take(size).ToListAsync();
+        return new PaginatedResult<TEntity>(
+            data,
+            size,
+            totalPage,
+            page
+        );
     }
 
     public ErrorOr<List<TEntity>> GetAll()
